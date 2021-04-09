@@ -26,10 +26,9 @@ router.post('/signup', async function (req, res) {
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;
     });
-    console.log(req.body);
     //hash Password
-    var newHash = await bcrypt.hash(req.body.password, 10);
-
+    var newHash = await bcrypt.hash(req.body.Password, 10);
+    console.log(newHash);
     //check if Exist
     let c = await db.query("select * from `users` where userName ='" + req.body.userName + "';", function (err, result) {
         if (err) {
