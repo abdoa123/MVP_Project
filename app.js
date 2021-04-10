@@ -6,6 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser')
 var registerRouter = require('./Authenticate/register');
 var loginRouter= require('./Authenticate/logIn');
+var permission = require('./Router/permission');
 var express = require('express');
 var cors = require('cors');
 var app = express();
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', registerRouter);
 app.use('/authenticate/login', loginRouter);
+app.use('/',permission);
 
 
 
