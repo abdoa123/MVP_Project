@@ -12,7 +12,7 @@ var user = {
 }
 var token ;
 router.post("/",async function(req,res){
-
+    console.log(req[data]);
    var test = await db.query('select * from `users` where userName =' + req.body.userName +';',function (err, result) {
     if (err){
         res.send(err);

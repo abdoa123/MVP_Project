@@ -2,6 +2,7 @@ var registerRouter = require('./Authenticate/register');
 var loginRouter= require('./Authenticate/logIn');
 var permission = require('./Router/permission');
 var forgetpass = require('./Authenticate/forgetpass');
+var doctorFD = require('./Router/doctorFD');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -24,9 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', forgetpass);
 app.use('/authenticate', registerRouter);
+app.use('/frontDisk',doctorFD);
 app.use('/authenticate/login', loginRouter);
 app.use('/',permission);
-
 
 
 // catch 404 and forward to error handler
