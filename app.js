@@ -1,12 +1,13 @@
+var registerRouter = require('./Authenticate/register');
+var loginRouter= require('./Authenticate/logIn');
+var permission = require('./Router/permission');
+var forgetpass = require('./Authenticate/forgetpass');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser')
-var registerRouter = require('./Authenticate/register');
-var loginRouter= require('./Authenticate/logIn');
-var permission = require('./Router/permission');
 var express = require('express');
 var cors = require('cors');
 var app = express();
@@ -21,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.use('/authenticate', forgetpass);
 app.use('/authenticate', registerRouter);
 app.use('/authenticate/login', loginRouter);
 app.use('/',permission);
