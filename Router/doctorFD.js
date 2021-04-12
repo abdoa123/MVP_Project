@@ -1,15 +1,60 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const reqModify = require('../Router/requestsModiy');
+const modifyFunction = require('../Router/requestsModiy');
 app.use(bodyParser);
-router.post('/',async function(req,res){
-    var modified=new reqModify();
-        let  table = `doctorFrontDisk`;
-    let added =   modified.addPerson(req.body.phone,req.body.address, req.body.establishment,req.body.contactperson,req.body.userId,table);
-    console.log(added);
-    res.send(added);
+
+router.post('/addPerson', async function(req,res){
+    console.log("asdasdsa");
+     let  table = `doctorFrontDisk`;
+     var modify = new modifyFunction();
+     modify.addPerson(req.body,table).then(result=>{
+         console.log("result -" + result);
+        if(result){
+            console.log("****");
+            res.send("1 record added")
+       }else{
+           console.log("123");
+           res.send("error in add front disk")
+       }
+     }).catch(err=>{
+         res.send(err);
+     })
 });
+
+router.get('/getPerson',async function(req,res){
+    let  table = `doctorFrontDisk`;
+    var modify = new modifyFunction();
+    modify.getPerson(req.body.ID,table).then(result=>{
+        res.send(result);
+    })
+  });
+
+  router.put('/updatePerson',async function(req,res){
+      let table = `doctorFrontDisk`;
+      var modify = new modifyFunction();
+      modify.updatePerson(req.body,table).then(result=>{
+          if(result){
+              res.send("Front disk updated done");
+          }else{
+              res.send("err");
+          }
+      })
+
+  })
+
+  router.delete('/deletePerson',async function(req,res){
+    let table = `doctorFrontDisk`;
+    var modify = new modifyFunction();
+    modify.deletePerson(req.body,table).then(result=>{
+        if(result){
+            res.send("user deleted done");
+        }else{
+            res.send("err");
+        }
+    })
+  })
+
 
 module.exports = router;
 
