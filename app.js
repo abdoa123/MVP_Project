@@ -3,6 +3,8 @@ var loginRouter= require('./Authenticate/logIn');
 var permission = require('./Router/permission');
 var forgetpass = require('./Authenticate/forgetpass');
 var doctorFD = require('./Router/doctorFD');
+var allergy = require('./Router/allergy');
+var diseases = require('./Router/diseases');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -28,7 +30,8 @@ app.use('/authenticate', registerRouter);
 app.use('/frontDisk',doctorFD);
 app.use('/authenticate/login', loginRouter);
 app.use('/',permission);
-
+app.use('/allergy',allergy);
+app.use('/diseases',diseases);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
