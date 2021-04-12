@@ -3,11 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 var db = require("../dataBase/dataBaseConnection");
 app.use(bodyParser);
-var user = {
-    tocken: "",
-    userName: "",
-    password: "",
-}
+
 class requstss{
     addPerson = (req,tableName)=>{
     console.log(tableName);
