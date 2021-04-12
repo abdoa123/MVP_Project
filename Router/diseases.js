@@ -4,8 +4,8 @@ var db = require("../dataBase/dataBaseConnection");
 
 
 //get user permission by userId
-router.get('/getAllergy',function(req,res){
-    var sql = "SELECT * from `allergy` where ID = " + req.body.ID ;
+router.get('/getDiseases',function(req,res){
+    var sql = "SELECT * from `diseases` where ID = " + req.body.ID ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
@@ -17,9 +17,9 @@ router.get('/getAllergy',function(req,res){
 });
 
 //get list of  user permission by roleId
-router.post('/addAllergy',async function(req,res){
+router.post('/addDiseases',async function(req,res){
   
-    let a = db.query('INSERT INTO `allergy` (name, description ) VALUES  (' + req.body.name +  ',' + req.body.description +')', function (err1, result2) {
+    let a = db.query('INSERT INTO `diseases` (code, name, abbreviation ) VALUES  (' + req.body.code +  ',' + req.body.name +','+ req.body.abbreviation  + ')', function (err1, result2) {
         if (err1) {
             console.log(err1)
         } else {
@@ -29,8 +29,8 @@ router.post('/addAllergy',async function(req,res){
 
     });
     });
-router.put('/updateAllergy',function(req,res){
-    db.query('UPDATE `allergy` SET name = '+req.body.name+', description = ' + req.body.description+' where ID = ' + req.body.ID,function(err,result){
+router.put('/updateDiseases',function(req,res){
+    db.query('UPDATE `diseases` SET code = '+req.body.code+', name = ' + req.body.name+', abbreviation = ' + req.body.abbreviation+' where ID = ' + req.body.ID,function(err,result){
         if(err){
             console.log(err);
            res.send(err);
@@ -41,8 +41,8 @@ router.put('/updateAllergy',function(req,res){
         }
     } )
 });
-router.delete('/deleteAllergy',async function(req,res){
-    db.query('DELETE  FROM `allergy` where ID = ' + req.body.ID,function(err,result){
+router.delete('/deleteDiseases',async function(req,res){
+    db.query('DELETE  FROM `diseases` where ID = ' + req.body.ID,function(err,result){
         if(err){
             res.send(err);
         }
