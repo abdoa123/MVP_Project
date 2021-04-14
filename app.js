@@ -5,9 +5,9 @@ var forgetpass = require('./Authenticate/forgetpass');
 var doctorFD = require('./Router/doctorFD');
 var appointment = require('./Router/appointment');
 var allergy = require('./Router/allergy');
+var employee = require('./Router/employee');
 var diseases = require('./Router/diseases');
 var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -33,7 +33,8 @@ app.use('/authenticate/login', loginRouter);
 app.use('/',permission);
 app.use('/allergy',allergy);
 app.use('/diseases',diseases);
-app.use('/appointment',appointment);
+app.use('/employee',employee);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

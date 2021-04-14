@@ -12,7 +12,7 @@ const db2 = mysql.createConnection({
 });
 /*
 //
-INSERT INTO `roles` (`id`, `roleName`, `roleDescription`) VALUES (NULL, 'admin', 'access every thing ');
+the new recorder will check by between start and end date;
 */ 
 
 db2.connect((err) => {
