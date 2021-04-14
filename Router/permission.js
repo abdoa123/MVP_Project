@@ -20,7 +20,7 @@ router.get('/userpermission',function(req,res){
             }
         }
     });
-});
+});  
 
 //get list of  user permission by roleId
 router.get('/rolepermission',function(req,res){
