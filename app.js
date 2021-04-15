@@ -42,7 +42,7 @@ app.use('/payment',payment);
 app.use('/labs',labs);
 app.use('/patho',patho);
 app.use('/drug',drug);
-
+app.use('/appointment',appointment);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

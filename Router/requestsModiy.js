@@ -60,10 +60,10 @@ class requstss{
         })
     })
        }
-    getAppointment = (date)=>{
+    getAppointment = (req)=>{
         return new Promise((resolve,reject)=>{
             
-            db.query('select * FROM  `appoinment` where date = ' + date,function(err,result){
+            db.query('select * FROM  `appoinment` where date = ' + req.date +'and drFDId = '+ req.drFDId,function(err,result){
                 if(err){
                     resolve(err);
                 }
@@ -73,10 +73,11 @@ class requstss{
             })
         })
     }
-    addAppointment =(req)=>
+    addAppointment =(req,endtime2)=>
     {
         return new Promise((resolve,reject)=>{
-           this.getAppointment(req.date).then(res=>{
+           this.getAppointment(req).then(res=>{
+               console.log(res);
              var result=JSON.stringify(res);  
              var json =  JSON.parse(result);              
                     if(res.length  ===0){
@@ -84,12 +85,13 @@ class requstss{
                     }
                     else{
                             for(var i =0;i<json.length;i++){
-                   
+                                console.log("dasd");
                                var dt = new Date();//current Date that gives us current Time also
-                               var startTime = json[i].startTime;
-                               var endTime = json[i].endTime;
+                               var startTime = json[i].startDate;
+                               var endTime = json[i].endDate;
                                console.log(req.startTime);
                                var test = req.startTime;
+                               test =test+':00';
                                var s =  startTime.split(':');
                                var dt1 = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(),
                                
@@ -112,7 +114,20 @@ class requstss{
                                 }
                                    
                             }
-                            resolve("accept")
+                            
+                              var t = req.startTime+":00";
+                             db.query('INSERT INTO `appoinment` (pationName, reason,startDate,endDate,drFDId,date ) VALUES  (' + req.pationName +  ',' + req.reason +
+                            ',' +"'"+t+ "'"+  ',' +"'"+ endtime2+ "'"+',' + req.drFDId +  ',' + req.date +')', function (err1, result2) {
+                                if (err1) {
+                                    resolve(err1);
+                                    
+                                } else {
+
+                                   resolve(result2);
+                                }
+
+                            });
+                          
                     }
                 })
                 
