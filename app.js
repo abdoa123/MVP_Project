@@ -8,6 +8,7 @@ var allergy = require('./Router/allergy');
 var employee = require('./Router/employee');
 var payment = require('./Router/payment');
 var diseases = require('./Router/diseases');
+var labs = require('./Router/labs');
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -36,6 +37,7 @@ app.use('/allergy',allergy);
 app.use('/diseases',diseases);
 app.use('/employee',employee);
 app.use('/payment',payment);
+app.use('/labs',labs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
