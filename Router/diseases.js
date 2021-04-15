@@ -4,8 +4,19 @@ var db = require("../dataBase/dataBaseConnection");
 
 
 //get user permission by userId
-router.get('/getDiseases',function(req,res){
-    var sql = "SELECT * from `diseases` where ID = " + req.body.ID ;
+router.get('/getById',function(req,res){
+    var sql = "SELECT * from `diseases` where id = " + req.body.id ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+});
+router.get('/getAll',function(req,res){
+    var sql = "SELECT * from `diseases` " ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
@@ -30,24 +41,24 @@ router.post('/addDiseases',async function(req,res){
     });
     });
 router.put('/updateDiseases',function(req,res){
-    db.query('UPDATE `diseases` SET code = '+req.body.code+', name = ' + req.body.name+', abbreviation = ' + req.body.abbreviation+' where ID = ' + req.body.ID,function(err,result){
+    db.query('UPDATE `diseases` SET code = '+req.body.code+', name = ' + req.body.name+', abbreviation = ' + req.body.abbreviation+' where id = ' + req.body.id,function(err,result){
         if(err){
             console.log(err);
            res.send(err);
         }
         else{
             console.log(result);
-            res.send(result);
+            res.send("1 row update successfully");
         }
     } )
 });
 router.delete('/deleteDiseases',async function(req,res){
-    db.query('DELETE  FROM `diseases` where ID = ' + req.body.ID,function(err,result){
+    db.query('DELETE  FROM `diseases` where id = ' + req.body.id,function(err,result){
         if(err){
             res.send(err);
         }
         else{
-            res.send(result);
+            res.send("1 row delete successfully");
         }
     })
 });

@@ -84,24 +84,7 @@ class requstss{
                     }
                     else{
                             for(var i =0;i<json.length;i++){
-                                /*
-                                var shour = arr[0];
-                                var newhour = newarr[0];
-                                var smin =arr[1];
-                                var newmin= newarr[1];
-                                var ehour = newarr2[0];
-                                var emin = newarr2[1];
-                                
-                               var newarr = req.startTime.split(':');
-                               var newarr2 = json[i].endTime.split(':');
-                               var arr = json[i].startTime.split(':');
-                               var newMin = newarr[0]*60+newarr[1]*1; 
-                               var stotalmin =  arr[0]*60+arr[1]*1;
-                               var etotlalmin = newarr2[0]*60+newarr2[1]*1; 
-                               var t = '24:00';
-                               var tarray = t.split(':');
-                               var t = tarray[0]*60+tarray[0]*1; 
-                               */
+                   
                                var dt = new Date();//current Date that gives us current Time also
                                var startTime = json[i].startTime;
                                var endTime = json[i].endTime;
