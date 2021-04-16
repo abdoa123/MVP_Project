@@ -9,8 +9,13 @@ var employee = require('./Router/employee');
 var payment = require('./Router/payment');
 var diseases = require('./Router/diseases');
 var labs = require('./Router/labs');
+var doctor = require('./Router/doctor');
+var ass = require('./Router/assistant');
 var patho = require('./Router/patho');
 var drug = require('./Router/drugs');
+var nurse = require('./Router/nurse');
+var radiogist = require('./Router/radiogist');
+var chemist = require('./Router/chemist');
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -41,6 +46,11 @@ app.use('/employee',employee);
 app.use('/payment',payment);
 app.use('/labs',labs);
 app.use('/patho',patho);
+app.use('/nurse',nurse);
+app.use('/assistant',ass);
+app.use('/doctor',doctor);
+app.use('/radiogist',radiogist);
+app.use('/chemist',chemist)
 app.use('/drug',drug);
 app.use('/appointment',appointment);
 // catch 404 and forward to error handler
