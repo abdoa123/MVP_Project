@@ -26,7 +26,7 @@ router.post('/getById', async function(req,res){
 });
 
 router.put('/updateAppointment',async function(req,res){
-    db.query('UPDATE `appoinment` SET patientName = '+'"'+req.body.patientName+'"'+', reason = ' +'"'+ req.body.reason+'"'+', startDate = "'+req.body.startDate+'", endDate = "'+req.body.endDate+' "' + ', drFDId ='+ req.body.drFDId+', date ='+req.body.date
+    db.query('UPDATE `appoinment` SET patientName = '+'"'+req.body.patientName+'"'+', reason = ' +'"'+ req.body.reason+'"'+', startDate = "'+req.body.startDate+'", endDate = "'+req.body.endDate+' "' + ', drFDId ='+ req.body.drFDId+', date ='+'"'+req.body.date+'"'
     +' where id = ' + req.body.id,function(err,result){
         if(err){
             console.log(err);
