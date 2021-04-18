@@ -25,7 +25,19 @@ router.post('/getById', async function(req,res){
 })
 });
 
-
+router.put('/updateAppointment',async function(req,res){
+    db.query('UPDATE `appoinment` SET patientName = '+'"'+req.body.patientName+'"'+', reason = ' +'"'+ req.body.reason+'"'+', startDate = "'+req.body.startDate+'", endDate = "'+req.body.endDate+' "' + ', drFDId ='+ req.body.drFDId+', date ='+req.body.date
+    +' where id = ' + req.body.id,function(err,result){
+        if(err){
+            console.log(err);
+           res.send(err);
+        }
+        else{
+            console.log(result);
+            res.send("1 row update successfully");
+        }
+    } )
+})
 router.post('/addApointment', async function(req,res){
     var modify = new modifyFunction();
     var s =  parseInt(req.body.duration);
