@@ -3,6 +3,7 @@ var loginRouter= require('./Authenticate/logIn');
 var permission = require('./Router/permission');
 var forgetpass = require('./Authenticate/forgetpass');
 var doctorFD = require('./Router/doctorFD');
+var radioFD = require('./Router/radioFrontDisk');
 var appointment = require('./Router/appointment');
 var allergy = require('./Router/allergy');
 var employee = require('./Router/employee');
@@ -16,7 +17,7 @@ var drug = require('./Router/drugs');
 var nurse = require('./Router/nurse');
 var radiogist = require('./Router/radiogist');
 var chemist = require('./Router/chemist');
-
+radioFrontDisk
 var  pathologist= require('./Router/pathologist');
 var createError = require('http-errors');
 var path = require('path');
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/authenticate', forgetpass);
 app.use('/authenticate', registerRouter);
 app.use('/dFrontDisk',doctorFD);
+app.use('/rFrontDisk',radioFD);
 app.use('/authenticate/login', loginRouter);
 app.use('/',permission);
 app.use('/allergy',allergy);

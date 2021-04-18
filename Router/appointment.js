@@ -3,6 +3,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('../Router/requestsModiy');
 const db = require('../dataBase/dataBaseConnection');
+
+
 router.post('/getAppointment',function(req,res){
     var modify = new modifyFunction();
     modify.getAppointment(req.body).then(result =>{
@@ -22,6 +24,7 @@ router.post('/getById', async function(req,res){
         }
 })
 });
+
 
 router.post('/addApointment', async function(req,res){
     var modify = new modifyFunction();

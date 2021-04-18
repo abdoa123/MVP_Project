@@ -8,7 +8,7 @@ class requstss{
     addPerson = (req,tableName)=>{
     console.log(tableName); 
     return new Promise((resolve,reject)=>{
-        db.query('INSERT INTO ' +  tableName +  '( userName,password,Email,address ,establishment,phone,contactperson) VALUES('+'"'+req.userName+'"'+'"'+req.password+'"'+'"'+req.email+'"'+','+'"'+req.address+'"'+','+
+        db.query('INSERT INTO ' + '`'+ tableName +'`'+  '(userName,password,Email,address,establishment,phone,contactperson) VALUES('+'"'+req.userName+'"'+','+'"'+req.password+'"'+','+'"'+req.email+'"'+','+'"'+req.address+'"'+','+
         '"'+req.establishment+'"'+','+'"'+ req.phone +'"' + ',' +'"'+ req.contactperson +'"'+');', function (err, result) {
         if (err) {
         console.log("err=>>" + err);
