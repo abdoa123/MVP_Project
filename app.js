@@ -16,6 +16,8 @@ var drug = require('./Router/drugs');
 var nurse = require('./Router/nurse');
 var radiogist = require('./Router/radiogist');
 var chemist = require('./Router/chemist');
+
+var  pathologist= require('./Router/pathologist');
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -37,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', forgetpass);
 app.use('/authenticate', registerRouter);
-app.use('/frontDisk',doctorFD);
+app.use('/dFrontDisk',doctorFD);
 app.use('/authenticate/login', loginRouter);
 app.use('/',permission);
 app.use('/allergy',allergy);
@@ -51,6 +53,7 @@ app.use('/assistant',ass);
 app.use('/doctor',doctor);
 app.use('/radiogist',radiogist);
 app.use('/chemist',chemist)
+app.use('/pathologist',pathologist)
 app.use('/drug',drug);
 app.use('/appointment',appointment);
 // catch 404 and forward to error handler

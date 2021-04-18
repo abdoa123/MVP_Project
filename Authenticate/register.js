@@ -42,7 +42,7 @@ router.post('/signup', async function (req, res) {
                     console.log(err1)
                 } else {
 
-                    res.send("1 record inserted")
+                    res.send({message : "1 record inserted"})
                 }
 
             });
@@ -50,7 +50,7 @@ router.post('/signup', async function (req, res) {
         }
         else {
             console.log("ads");
-            res.send("user Already Exist");
+            res.send({message : "user Already Exist"});
         }
     });
     console.log(chee);

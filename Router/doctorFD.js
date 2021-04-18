@@ -5,7 +5,6 @@ const modifyFunction = require('../Router/requestsModiy');
 app.use(bodyParser);
 
 router.post('/addPerson', async function(req,res){
-    console.log("asdasdsa");
      let  table = `doctorFrontDisk`;
      var modify = new modifyFunction();
      modify.addPerson(req.body,table).then(result=>{
@@ -25,7 +24,7 @@ router.post('/addPerson', async function(req,res){
 router.get('/getPerson',async function(req,res){
     let  table = `doctorFrontDisk`;
     var modify = new modifyFunction();
-    modify.getPerson(req.body.ID,table).then(result=>{
+    modify.getPerson(req.body.id,table).then(result=>{
         res.send(result);
     })
   });

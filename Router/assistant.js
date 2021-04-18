@@ -6,10 +6,10 @@ app.use(bodyParser);
 const db = require('../dataBase/dataBaseConnection');
 
 
-router.post('/addAssistantr', async function(req,res){
-    let a = db.query('INSERT INTO `assistant` (firstName, lastName, Email,Date,degree,address,phone,userName,password) VALUES  (' + req.body.firstName + 
-    ',' + req.body.lastName +','+ req.body.Email  +','+  req.body.Date + 
-    ',' + req.body.degree +','+ req.body.address + ',' + req.body.phone +','+ req.body.userName + ','+req.body.password +')', function (err1, result2) {
+router.post('/addAssistant', async function(req,res){
+    let a = db.query('INSERT INTO `assistant` (firstName, lastName, Email,degree,address,phone,userName,password , Date) VALUES  (' +'"'+ req.body.firstName +'"'+ 
+    ',' +'"'+ req.body.lastName +'"' +','+'"'+ req.body.Email + '"'+
+    ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.address + '"'+',' + req.body.phone +','+'"'+ req.body.userName +'"'+ ','+'"'+req.body.password +'"'+','+'"'+req.body.Date+'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
        } else {
@@ -20,13 +20,27 @@ router.post('/addAssistantr', async function(req,res){
    });
 });
 
-router.get('/getAssistant',async function(req,res){
-    var sql = "SELECT * from `assistant` where id = " + req.body.id ;
+router.get('/getAll',async function(req,res){
+    var sql = "SELECT * from `assistant` "  ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
         }
         else{
+           res.send(result);
+        }
+    });
+  });
+
+router.get('/getAssistant/:id',async function(req,res){
+    console.log("id: " ,req.params.id);
+    var sql = "SELECT * from `assistant` where id = " + '"'+req.params.id+'"' ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+            console.log("resp: " , result);
            res.send(result);
         }
     });

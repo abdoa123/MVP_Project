@@ -6,10 +6,10 @@ app.use(bodyParser);
 
 class requstss{
     addPerson = (req,tableName)=>{
-    console.log(tableName);
+    console.log(tableName); 
     return new Promise((resolve,reject)=>{
-        db.query('INSERT INTO ' +  tableName +  '(userId, address ,establishment,phone,contactperson) VALUES('+req.userId+','+req.address+','+
-        req.establishment+','+ req.phone + ',' + req.contactperson +');', function (err, result) {
+        db.query('INSERT INTO ' +  tableName +  '( userName,password,Email,address ,establishment,phone,contactperson) VALUES('+'"'+req.userName+'"'+'"'+req.password+'"'+'"'+req.email+'"'+','+'"'+req.address+'"'+','+
+        '"'+req.establishment+'"'+','+'"'+ req.phone +'"' + ',' +'"'+ req.contactperson +'"'+');', function (err, result) {
         if (err) {
         console.log("err=>>" + err);
         resolve(false);
@@ -22,7 +22,7 @@ class requstss{
                     }
     getPerson = (id,tableName)=>{
         return new Promise((resolve,reject)=>{
-        db.query('select * from ' + tableName + ' where ID = ' + id,function(err,result){
+        db.query('select * from ' + tableName + ' where id = ' + id,function(err,result){
             if(err){
                 resolve(err);
             }
@@ -63,7 +63,7 @@ class requstss{
     getAppointment = (req)=>{
         return new Promise((resolve,reject)=>{
             
-            db.query('select * FROM  `appoinment` where date = ' + req.date +'and drFDId = '+ req.drFDId,function(err,result){
+            db.query('select * FROM  `appoinment` where date = ' + '"'+req.date +'"' +'and drFDId = '+ req.drFDId,function(err,result){
                 if(err){
                     resolve(err);
                 }
@@ -81,7 +81,23 @@ class requstss{
              var result=JSON.stringify(res);  
              var json =  JSON.parse(result);              
                     if(res.length  ===0){
-                        resolve("no date appaspdko");
+                        console.log("test");
+                        var t = req.startTime+":00";
+                        console.log(req.patientName +  ',' + req.reason +
+                        ',' +"'"+t+ "'"+  ',' +"'"+ endtime2+ "'"+',' + req.drFDId +  ',' + req.date )
+                        db.query('INSERT INTO `appoinment` (patientName, reason,startDate,endDate,drFDId,date ) VALUES  (' +'"'+req.patientName +'"'+  ',' +'"'+ req.reason +'"'+
+                       ',' +"'"+t+ "'"+  ',' +"'"+ endtime2+ "'"+',' + req.drFDId +  ','  +'"'+req.date+'"' +')', function (err1, result2) {
+                           if (err1) {
+                               console.log(err1)
+                               resolve(err1);
+                               
+                           } else {
+                            console.log(result2)
+
+                              resolve(result2);
+                           }
+
+                       });
                     }
                     else{
                             for(var i =0;i<json.length;i++){

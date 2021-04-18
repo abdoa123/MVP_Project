@@ -4,7 +4,7 @@ var db = require("../dataBase/dataBaseConnection");
 
 
 //get user permission by userId
-router.get('/getById',function(req,res){
+router.post('/getById',function(req,res){
     var sql = "SELECT * from `diseases` where id = " + req.body.id ;
     db.query(sql, function (err, result) {
         if (err) {
@@ -41,7 +41,7 @@ router.post('/addDiseases',async function(req,res){
     });
     });
 router.put('/updateDiseases',function(req,res){
-    db.query('UPDATE `diseases` SET code = '+req.body.code+', name = ' + req.body.name+', abbreviation = ' + req.body.abbreviation+' where id = ' + req.body.id,function(err,result){
+    db.query('UPDATE `diseases` SET code = '+'"'+req.body.code+'"'+', name = ' +'"'+ req.body.name+'"'+', abbreviation = ' +'"'+ req.body.abbreviation+'"'+' where id = ' + req.body.id,function(err,result){
         if(err){
             console.log(err);
            res.send(err);

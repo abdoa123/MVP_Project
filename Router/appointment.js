@@ -2,14 +2,27 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('../Router/requestsModiy');
-const db2 = require('../dataBase/dataBaseConnection');
-router.get('/getById',function(req,res){
+const db = require('../dataBase/dataBaseConnection');
+router.post('/getAppointment',function(req,res){
     var modify = new modifyFunction();
     modify.getAppointment(req.body).then(result =>{
         res.send(result);
     });
 
 })
+router.post('/getById', async function(req,res){
+    db.query('select * FROM  `appoinment` where id = ' + +req.body.id ,function(err,result){
+        if(err){
+            console.log(err);
+            res.send(err);
+        }
+        else{
+            console.log(result)
+            res.send(result);
+        }
+})
+});
+
 router.post('/addApointment', async function(req,res){
     var modify = new modifyFunction();
     var s =  parseInt(req.body.duration);
@@ -34,5 +47,14 @@ router.post('/addApointment', async function(req,res){
         res.send(result);
     })
 })
-
+router.delete('/deleteAppoinment',async function(req,res){
+    db.query('DELETE  FROM `appoinment` where id = ' + req.body.id,function(err,result){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.send("1 row delete successfully");
+        }
+    })
+});
 module.exports = router;

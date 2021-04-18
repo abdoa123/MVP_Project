@@ -7,9 +7,9 @@ const db = require('../dataBase/dataBaseConnection');
 
 
 router.post('/addRadiogist', async function(req,res){
-    let a = db.query('INSERT INTO `radiogist` (firstName, lastName, Email,Date,degree,address,phone,userName,password) VALUES  (' + req.body.firstName + 
-    ',' + req.body.lastName +','+ req.body.Email  +','+  req.body.Date + 
-    ',' + req.body.degree +','+ req.body.address + ',' + req.body.phone +','+ req.body.userName + ','+req.body.password +')', function (err1, result2) {
+    let a = db.query('INSERT INTO `radiogist` (firstName, lastName, Email,degree,address,phone,userName,password , Date) VALUES  (' +'"'+ req.body.firstName +'"'+ 
+    ',' +'"'+ req.body.lastName +'"' +','+'"'+ req.body.Email + '"'+
+    ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.address + '"'+',' + req.body.phone +','+'"'+ req.body.userName +'"'+ ','+'"'+req.body.password +'"'+','+'"'+req.body.Date+'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
        } else {
@@ -22,6 +22,16 @@ router.post('/addRadiogist', async function(req,res){
 
 router.get('/getRadiogist',async function(req,res){
     var sql = "SELECT * from `radiogist` where id = " + req.body.id ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });router.get('/getAll',async function(req,res){
+    var sql = "SELECT * from `radiogist`" ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
