@@ -5,7 +5,7 @@ const modifyFunction = require('../Router/requestsModiy');
 app.use(bodyParser);
 
 router.post('/addPerson', async function(req,res){
-     let  table = `pathologyFrontDisk`;
+     let  table = `PathologyFrontDisk`;
      var modify = new modifyFunction();
      modify.addPerson(req.body,table).then(result=>{
          console.log("result -" + result);
@@ -22,7 +22,7 @@ router.post('/addPerson', async function(req,res){
 });
 
 router.get('/getPerson',async function(req,res){
-    let  table = `pathologyFrontDisk`;
+    let  table = `PathologyFrontDisk`;
     var modify = new modifyFunction();
     modify.getPerson(req.body.id,table).then(result=>{
         res.send(result);
@@ -30,7 +30,7 @@ router.get('/getPerson',async function(req,res){
   });
 
   router.put('/updatePerson',async function(req,res){
-      let table = `pathologyFrontDisk`;
+      let table = `PathologyFrontDisk`;
       var modify = new modifyFunction();
       modify.updatePerson(req.body,table).then(result=>{
           if(result){
@@ -43,7 +43,7 @@ router.get('/getPerson',async function(req,res){
   })
 
   router.delete('/deletePerson',async function(req,res){
-    let table = `pathologyFrontDisk`;
+    let table = `PathologyFrontDisk`;
     var modify = new modifyFunction();
     modify.deletePerson(req.body,table).then(result=>{
         if(result){
