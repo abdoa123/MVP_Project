@@ -31,5 +31,4 @@ let data = {
 
    });
 });
-let stringdata = JSON.stringify(data)
 

@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+/*const { spawn } = require('child_process');
 const got = require('got');
 const test = require('tape');
 
@@ -25,4 +25,15 @@ test('responds to requests', (t) => {
       t.notEqual(response.body.indexOf("Getting Started on Heroku with Node.js"), -1);
     })();
   });
-});
+});*/
+let data = {
+  name:"abdo",
+  age:"23"
+}
+let stringdata = JSON.stringify(data)
+
+const QRCode = require('qrcode')
+QRCode.toDataURL(stringdata, function (err, url) {
+  if(err) return console.log("error occured")
+  console.log(url)
+})
