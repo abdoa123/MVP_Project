@@ -166,6 +166,22 @@ class requstss{
        })  
 })
     }
+    
+       addPatient = (req)=>{
+        return new Promise((resolve,reject)=>{
+            db.query('INSERT INTO `Patient` (phone,address,email,birthDate,maritalStatus,bloodGroup,firstName,lastName,middleName) VALUES('+'"'+req.userName+'"'+','+'"'+req.password+'"'+','+'"'+req.email+'"'+','+'"'+req.address+'"'+','+
+            '"'+req.establishment+'"'+','+'"'+ req.phone +'"' + ',' +'"'+ req.contactperson +'"'+');', function (err, result) {
+            if (err) {
+            console.log("err=>>" + err);
+            resolve(false);
+            }else{
+                console.log("res=>" + result);
+                resolve(true);
+            }
+                 })
+                     })
+       }
 
-}
+    }
+    
 module.exports= requstss;
