@@ -23,7 +23,7 @@ router.post('/addDoctor', async function(req,res){
    });
 });
 
-router.get('/getDoctor',async function(req,res){
+router.post('/getDoctor',async function(req,res){
     var sql = "SELECT * from `doctor` where id = " + req.body.id ;
     db.query(sql, function (err, result) {
         if (err) {

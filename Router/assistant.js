@@ -32,9 +32,9 @@ router.get('/getAll',async function(req,res){
     });
   });
 
-router.get('/getAssistant/:id',async function(req,res){
-    console.log("id: " ,req.params.id);
-    var sql = "SELECT * from `assistant` where id = " + '"'+req.params.id+'"' ;
+router.post('/getAssistant',async function(req,res){
+    // console.log("id: " ,req.params.id);
+    var sql = "SELECT * from `assistant` where id = " + req.body.id ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 

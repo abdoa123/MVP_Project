@@ -21,7 +21,7 @@ router.post('/addChemist', async function(req,res){
    });
 });
 
-router.get('/getChemist',async function(req,res){
+router.post('/getChemist',async function(req,res){
     var sql = "SELECT * from `chemist` where id = " + req.body.id ;
     db.query(sql, function (err, result) {
         if (err) {
@@ -43,7 +43,7 @@ router.get('/getChemist',async function(req,res){
     });
   });
 
-  router.put('/updatChemist',async function(req,res){
+  router.put('/updateChemist',async function(req,res){
       let table = `chemist`;
       var modify = new modifyFunction();
       modify.updateEmployee(req,table).then(result=>{
@@ -56,7 +56,7 @@ router.get('/getChemist',async function(req,res){
 
   })
 
-  router.delete('/deleteDoctor',async function(req,res){
+  router.delete('/deleteChemist',async function(req,res){
     db.query('DELETE  FROM `chemist` where id = ' + req.body.id,function(err,result){
         if(err){
             res.send(err);
