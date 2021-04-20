@@ -16,6 +16,7 @@ var doctor = require('./Router/doctor');
 var ass = require('./Router/assistant');
 var patho = require('./Router/patho');
 var drug = require('./Router/drugs');
+var pt = require('./Router/pation');
 var nurse = require('./Router/nurse');
 var radiogist = require('./Router/radiogist');
 var chemist = require('./Router/chemist');
@@ -67,6 +68,7 @@ app.use('/chemist',chemist)
 app.use('/pathologist',pathologist)
 app.use('/drug',drug);
 app.use('/appointment',appointment);
+app.use('/pt',pt);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
