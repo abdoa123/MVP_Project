@@ -151,10 +151,10 @@ class requstss{
         }
     updateEmployee = (req,tableName)=>{
         return new Promise((resolve,reject)=>{
-        db.query('UPDATE' +tableName+ 'SET firstName = '+req.body.firstName+', lastName = ' + req.body.lastName+', middleName = '
-        + req.body.middleName +', degree = ' + req.body.degree+', birthDate = '
-        + req.body.birthDate +', address = ' + req.body.address+', phone = '
-        + req.body.phone +', type = ' + req.body.type + ' where ID = ' + req.body.ID,function(err,result){
+        db.query('UPDATE' +tableName+ 'SET firstName = '+'"'+req.body.firstName+'"'+', lastName = ' +'"'+ req.body.lastName+'"'+', password = '
+        +'"'+ req.body.password+'"'+', degree = ' +'"'+ req.body.degree+'"'+', Date = '
+        + '"'+req.body.Date+'"' +', address = ' + '"'+req.body.address+'"'+', phone = '
+        +'"'+ req.body.phone +'"'+', Email =' +'"'+req.body.email +'"'+', userName =' +'"'+req.body.userName +'"'+ ' where id = ' + req.body.id,function(err,result){
            if(err){
                console.log(err);
                resolve(err);
