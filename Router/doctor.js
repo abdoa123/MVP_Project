@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const modifyFunction = require('../Router/employee');
+const modifyFunction = require('../Router/requestsModiy');
 app.use(bodyParser);
 const db = require('../dataBase/dataBaseConnection');
 
@@ -49,9 +49,9 @@ router.get('/getDoctor',async function(req,res){
   router.put('/updateDoctor',async function(req,res){
       let table = `doctor`;
       var modify = new modifyFunction();
-      modify.updatePerson(req.body,table).then(result=>{
+      modify.updateEmployee(req,table).then(result=>{
           if(result){
-              res.send("Front disk updated done");
+              res.send("done");
           }else{
               res.send("err");
           }

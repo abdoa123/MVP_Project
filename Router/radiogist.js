@@ -42,18 +42,18 @@ router.get('/getRadiogist',async function(req,res){
     });
   });
 
-  router.put('/updateDoctor',async function(req,res){
-      let table = `doctor`;
-      var modify = new modifyFunction();
-      modify.updatePerson(req.body,table).then(result=>{
-          if(result){
-              res.send("Front disk updated done");
-          }else{
-              res.send("err");
-          }
-      })
+  router.put('/updateRadiogist',async function(req,res){
+    let table = `radiogist`;
+    var modify = new modifyFunction();
+    modify.updateEmployee(req,table).then(result=>{
+        if(result){
+            res.send('done');
+        }else{
+            res.send("err");
+        }
+    })
 
-  })
+})
 
   router.delete('/deleteDoctor',async function(req,res){
     db.query('DELETE  FROM `nurse` where id = ' + req.body.id,function(err,result){

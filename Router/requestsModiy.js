@@ -149,9 +149,23 @@ class requstss{
                 
             });
         }
-    
-       
-
+    updateEmployee = (req,tableName)=>{
+        return new Promise((resolve,reject)=>{
+        db.query('UPDATE' +tableName+ 'SET firstName = '+req.body.firstName+', lastName = ' + req.body.lastName+', middleName = '
+        + req.body.middleName +', degree = ' + req.body.degree+', birthDate = '
+        + req.body.birthDate +', address = ' + req.body.address+', phone = '
+        + req.body.phone +', type = ' + req.body.type + ' where ID = ' + req.body.ID,function(err,result){
+           if(err){
+               console.log(err);
+               resolve(err);
+           }
+           else{
+               console.log(result);
+               resolve(true);
+           }
+       })  
+})
+    }
 
 }
 module.exports= requstss;
