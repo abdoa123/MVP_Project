@@ -23,7 +23,7 @@ router.post('/addpt', async function (req, res) {
             }
 
             for (var i = 0; i < json.familyHistory.length; i++) {
-               db.query('INSERT INTO ' + '`pt_familyHistory`' + '(relation,problem,dateوnotes,ptid) VALUES(' + '"' + json.familyHistory[i].relation + '"' + ',' + '"' + json.familyHistory[i].problem + '"' + ',' + '"' + json.familyHistory[i].date
+               db.query('INSERT INTO ' + '`pt_familyHistory`' + '(relation,problem,date,notes,ptid) VALUES(' + '"' + json.familyHistory[i].relation + '"' + ',' + '"' + json.familyHistory[i].problem + '"' + ',' + '"' + json.familyHistory[i].date
                   + '",' + '"' + json.familyHistory[i].notes + '",' + result["insertId"] + ');', function (err, result2) {
                      if (err) {
                         console.log(err);
@@ -42,8 +42,7 @@ router.post('/addpt', async function (req, res) {
             }
             for (var i = 0; i < json.onGoingProblems.length; i++) {
                db.query('INSERT INTO ' + '`pt_problems`' + '(problem,date,treatingDr,status,ptid) VALUES(' + '"' + json.onGoingProblems[i].problem + '"' + ',' + '"' + json.onGoingProblems[i].date
-                  + '",' + '"' + json.onGoingProblems[i].treatingDr + '",' + '"' + json.onGoingProblems[i].treatingDr + '"'
-                  + ',' + '"' + json.onGoingProblems[i].treatingDr + '"' + ',' + '"' + json.onGoingProblems[i].status + '"' + ',' + result["insertId"] + ');', function (err, result3) {
+                  + '",' + '"' + json.onGoingProblems[i].treatingDr + '",' + '"' + json.onGoingProblems[i].status + '"'+ ',' + result["insertId"] + ');', function (err, result3) {
                      if (err) {
                         console.log(err);
                         res.send(err);
