@@ -22,6 +22,7 @@ var radiogist = require('./Router/radiogist');
 var chemist = require('./Router/chemist');
 var radioOrder = require('./Router/radioOrder');
 var labOrder = require('./Router/labOrder');
+var visit = require('./Router/visit');
 var pathologyOrder = require('./Router/pathologyOrder');
 var  pathologist= require('./Router/pathologist');
 var createError = require('http-errors');
@@ -70,6 +71,7 @@ app.use('/chemist',chemist)
 app.use('/pathologist',pathologist)
 app.use('/drug',drug);
 app.use('/appointment',appointment);
+app.use('/visit',visit);
 app.use('/pt',pt);
 app.use('/session',session);
 // catch 404 and forward to error handler
