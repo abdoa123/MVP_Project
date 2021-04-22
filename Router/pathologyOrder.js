@@ -27,6 +27,19 @@ router.post('/getOrderById',async function(req,res){
     })
   });
 
+  router.get('/getOrdersBypathologyId',async function(req,res){
+
+    var sql = "SELECT * from `pathologyOrder` where id = "+req.body.id ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });
+
   router.put('/updateOrder',async function(req,res){
       let table = `pathologyOrder`;
       var modify = new modifyFunction();

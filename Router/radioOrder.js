@@ -26,6 +26,18 @@ router.post('/getOrderById',async function(req,res){
         res.send(result);
     })
   });
+  router.post('/getOrdersByLabId',async function(req,res){
+
+    var sql = "SELECT * from `RadioOrder` where id = "+req.body.id ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });
 
   router.put('/updateOrder',async function(req,res){
       let table = `RadioOrder`;

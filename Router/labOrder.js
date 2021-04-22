@@ -19,10 +19,8 @@ router.post('/addOrder', async function(req,res){
      })
 });
 
-router.get('/getAll',async function(req,res){
-    console.log("yyyyyyyyyyeeeeeeessss  ");
-    // let  table = `labOrder`;
-    var sql = "SELECT * from `labOrder` " ;
+router.post('/getOrdersByLabId',async function(req,res){
+    var sql = "SELECT * from `labOrder` where id = "+req.body.id ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
@@ -32,6 +30,7 @@ router.get('/getAll',async function(req,res){
         }
     });
   });
+
 
 router.post('/getOrderByPtId',async function(req,res){
     console.log("ptID: ", req.body.ptId , "   ", req.body.type);

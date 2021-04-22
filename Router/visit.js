@@ -3,11 +3,12 @@ const router = express.Router();
 var db = require("../dataBase/dataBaseConnection");
 
 router.post('/addvisit', async function(req,res){
+    console.log("ress:    " , req.body);
     var result = JSON.stringify(req.body);
     var json = JSON.parse(result);
         let a = db.query('INSERT INTO `visit` (chiefComplains, diagnosis, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' +'"'+json.chiefComplains+'"' + 
-        ',' +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+', "'+ json.deasesId+'"'+', "'
-        + json.labId+'"'+', "'+json.pathologyId+'"'+',"'+json.radioId+')', function (err1, result2) {
+        ',' +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+', "'+ json.DD+'"'+', "'
+        + json.labsChoices.id+'"'+', "'+json.pathologyChoices.id+'"'+',"'+json.radioChoices.id+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
        } else {
