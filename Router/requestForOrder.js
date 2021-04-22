@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
 var db = require("../dataBase/dataBaseConnection");
-app.use(bodyParser);
+
 class requstss{
     addOrder = (req,tableName)=>{
         console.log(tableName); 

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('./requestForOrder');
-app.use(bodyParser);
 
 router.post('/addOrder', async function(req,res){
      let  table = `labOrder`;

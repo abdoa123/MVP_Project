@@ -25,6 +25,7 @@ var labOrder = require('./Router/labOrder');
 var pathologyOrder = require('./Router/pathologyOrder');
 var  pathologist= require('./Router/pathologist');
 var createError = require('http-errors');
+var session = require('./Router/session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -34,8 +35,9 @@ var cors = require('cors');
 var app = express();
 app.use(cors())
 
-
-
+let startDate= new Date();
+var dt1 = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+1,startDate.getHours(),startDate.getMinutes(),startDate.getSeconds());
+console.log(dt1)
 app.use(bodyParser.json())
 app.use(logger('dev'));
 app.use(express.json());
@@ -69,6 +71,7 @@ app.use('/pathologist',pathologist)
 app.use('/drug',drug);
 app.use('/appointment',appointment);
 app.use('/pt',pt);
+app.use('/session',session);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
