@@ -5,9 +5,28 @@ var db = require("../dataBase/dataBaseConnection");
 router.post('/addvisit', async function(req,res){
     var result = JSON.stringify(req.body);
     var json = JSON.parse(result);
+    let dease ="";
+    let labsChoices ="";
+    let radioChoices ="";
+    let pathologyChoices ="";
+    for(var i=0;i<json.DD.length;i++){
+        dease +="," +json.DD[i]; 
+    }
+    for(var i=0;i<json.labsChoices.length;i++){
+        labsChoices +="," +json.labsChoices[i]; 
+        
+    }
+    console.log('DD' , json.DD);
+    console.log('lab' , labsChoices);
+    for(var i=0;i<json.radioChoices.length;i++){
+        radioChoices +="," +json.radioChoices[i]; 
+    }
+    for(var i=0;i<json.pathologyChoices.length;i++){
+        pathologyChoices +="," +json.pathologyChoices[i]; 
+    }
         let a = db.query('INSERT INTO `visit` (chiefComplains, diagnosis, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' +'"'+json.chiefComplains+'"' + 
-        ',' +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+', "'+ json.deasesId+'"'+', "'
-        + json.labId+'"'+', "'+json.pathologyId+'"'+',"'+json.radioId+')', function (err1, result2) {
+        ',' +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+', "'+ dease+'"'+', "'
+        + labsChoices+'"'+', "'+pathologyChoices+'"'+',"'+radioChoices+'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
        } else {
