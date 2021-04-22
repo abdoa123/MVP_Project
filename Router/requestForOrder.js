@@ -34,18 +34,18 @@ class requstss{
     
         return new Promise((resolve,reject)=>{
 
-            if(type==1){
-                console.log("11")
-                var sql = 'SELECT  *  FROM Patient  JOIN labOrder ON Patient.id = labOrder.ptId AND Patient.id = '+req;
+            if(type==4){
+                console.log("444")
+                var sql = 'SELECT  *  FROM  labOrder ON Patient.id = labOrder.ptId AND Patient.id = '+req;
                 db.query(sql, function (err, result) {
                 if (err) {
                 resolve(err);
                 }else{      
                     resolve(result);
                 }
-                     })
-        }else if(type==2){
-            console.log("22")
+                     })}
+        else if(type==3){
+            console.log("3333")
             var sql = 'SELECT  *  FROM Patient  JOIN RadioOrder ON Patient.id = RadioOrder.ptId AND Patient.id = '+req;
             db.query(sql, function (err, result) {
             if (err) {
@@ -54,7 +54,44 @@ class requstss{
                 resolve(result);
             }
                  })
-        }else{
+        }
+        else if(type==0){
+            console.log("0000")
+            var sql = 'SELECT  *  FROM labOrder where ptId = '+req;
+            db.query(sql, function (err, result) {
+            if (err) {
+            resolve(err);
+            }else{      
+                resolve(result);
+            }
+                 })
+            }
+            else if(type==1){
+                console.log("111")
+                var sql = 'SELECT  *  FROM RadioOrder where ptId = '+req;
+                db.query(sql, function (err, result) {
+                if (err) {
+                resolve(err);
+                }else{      
+                    resolve(result);
+                }
+                     })
+        }
+        else if(type==2){
+            console.log("222")
+            var sql = 'SELECT  *  FROM pathologyOrder where ptId = '+req;
+            db.query(sql, function (err, result) {
+            if (err) {
+            resolve(err);
+            }else{      
+                resolve(result);
+            }
+                 })
+    }
+        
+        
+        
+        else{
             console.log("33")
             var sql = 'SELECT  *  FROM Patient  JOIN pathologyOrder ON Patient.id = pathologyOrder.ptId AND Patient.id = '+req;
             db.query(sql, function (err, result) {
@@ -69,12 +106,13 @@ class requstss{
     }
     updateOrder = (req,tableName)=>{
         return new Promise((resolve,reject)=>{
-            db.query('UPDATE'+tableName+'SET ptId = '+req.ptId+', drId = ' + req.drId+', date = "'+req.date+'", comments = "'+req.comments+' "' + ', status = "'+ req.status+' "' + ', result = "'+ req.result+'" where id = ' + req.id,function(err,result){
+            db.query('UPDATE '+tableName+' SET ptId = '+req.ptId+', drId = ' + req.drId+', date = "'+req.date+'", comments = "'+req.comments+' "' + ', status = "'+ req.status+' "' + ', result = "'+ req.result+'" where id = ' + req.id,function(err,result){
                 if(err){
+                    console.log(err);
                     resolve(err);
                 }
                 else{
-                    resolv(true);
+                    resolve(true);
                 }
             } )
         })

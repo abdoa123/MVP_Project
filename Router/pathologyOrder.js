@@ -30,7 +30,7 @@ router.post('/getOrderById',async function(req,res){
   router.put('/updateOrder',async function(req,res){
       let table = `pathologyOrder`;
       var modify = new modifyFunction();
-      modify.updatePerson(req.body,table).then(result=>{
+      modify.updateOrder(req.body,table).then(result=>{
           if(result){
               res.send("order updated done");
           }else{

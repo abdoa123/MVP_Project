@@ -64,4 +64,18 @@ router.post('/addpt', async function (req, res) {
       })
 });
 
+router.post('/getById',function(req,res){
+   console.log('function Get Patient : ' , req.body.id);
+   var sql = "SELECT * from `Patient` where id = " + req.body.id ;
+   db.query(sql, function (err, result) {
+       if (err) {
+          
+           res.send(err); 
+       }
+       else{
+          res.send(result);
+       }
+   });
+});
+
 module.exports = router;
