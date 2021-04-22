@@ -3,31 +3,46 @@ const router = express.Router();
 var db = require("../dataBase/dataBaseConnection");
 
 router.post('/addvisit', async function(req,res){
-    console.log("ress:    " , req.body);
     var result = JSON.stringify(req.body);
     var json = JSON.parse(result);
+    console.log('asd',json.DD[0].id);
     let dease ="";
     let labsChoices ="";
     let radioChoices ="";
     let pathologyChoices ="";
+    console.log(json.DD[0].code)
     for(var i=0;i<json.DD.length;i++){
-        dease +="," +json.DD[i]; 
+        if(i==0){
+            dease+='{'
+        }
+        dease += '"'+(json.DD[i].id)+'",'; 
     }
+    dease+='}'
     for(var i=0;i<json.labsChoices.length;i++){
-        labsChoices +="," +json.labsChoices[i]; 
+        if(i==0){
+            labsChoices+='{'
+        }
+        labsChoices += '"'+json.labsChoices[i].id+'",'; 
         
     }
-    console.log('DD' , json.DD);
-    console.log('lab' , labsChoices);
+    labsChoices+='}';
     for(var i=0;i<json.radioChoices.length;i++){
-        radioChoices +="," +json.radioChoices[i]; 
+        if(i==0){
+            radioChoices+='{'
+        }
+        radioChoices +='"'+json.radioChoices[i].id+'",'; 
     }
+    radioChoices+='}'
     for(var i=0;i<json.pathologyChoices.length;i++){
-        pathologyChoices +="," +json.pathologyChoices[i]; 
+        if(i==0){
+            pathologyChoices+='{'
+        }
+        pathologyChoices +='"'+json.pathologyChoices[i].id+'",'; 
     }
-        let a = db.query('INSERT INTO `visit` (chiefComplains, diagnosis, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' +'"'+json.chiefComplains+'"' + 
-        ',' +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+', "'+ dease+'"'+', "'
-        + labsChoices+'"'+', "'+pathologyChoices+'"'+',"'+radioChoices+'"'+')', function (err1, result2) {
+    pathologyChoices+='}'
+        let a = db.query('INSERT INTO `visit` (chiefComplains, diagnosis, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' +'"'+json.chiefComplains+'",' + 
+         +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+','+ '"'+dease+'",'
+        +'"'+ labsChoices+'"'+','+'"'+pathologyChoices+'"'+','+'"'+radioChoices+'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
        } else {
