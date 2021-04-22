@@ -19,10 +19,10 @@ router.post('/addOrder', async function(req,res){
      })
 });
 
-router.post('/getOrderById',async function(req,res){
-    let  table = `labOrder`;
+router.post('/getOrderByPtId',async function(req,res){
+
     var modify = new modifyFunction();
-    modify.getOrder(req.body.id,table).then(result=>{
+    modify.getOrder(req.body.ptId,req.body.type).then(result=>{
         res.send(result);
     })
   });

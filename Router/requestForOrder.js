@@ -18,17 +18,54 @@ class requstss{
                  })
                      })
                         }
-    getOrder = (req,tableName)=>{
+    getPT = async (req)=>{
         return new Promise((resolve,reject)=>{
-            db.query('select * from '+tableName+'where id ='+ req.id, function (err, result) {
+            db.query('select * from `Patient` where  id  = '+ req, function (err, result) {
             if (err) {
             console.log("err=>>" + err);
-            resolve(false);
+            resolve(err);
             }else{
                 console.log("res=>" + result);
-                resolve(true);
+                resolve(result);
             }
                  })
+                     })
+    }                   
+    getOrder = async (req,type)=>{
+    
+        return new Promise((resolve,reject)=>{
+
+            if(type==1){
+                console.log("11")
+                var sql = 'SELECT  *  FROM Patient  JOIN labOrder ON Patient.id = labOrder.ptId AND Patient.id = '+req;
+                db.query(sql, function (err, result) {
+                if (err) {
+                resolve(err);
+                }else{      
+                    resolve(result);
+                }
+                     })
+        }else if(type==2){
+            console.log("22")
+            var sql = 'SELECT  *  FROM Patient  JOIN RadioOrder ON Patient.id = RadioOrder.ptId AND Patient.id = '+req;
+            db.query(sql, function (err, result) {
+            if (err) {
+            resolve(err);
+            }else{      
+                resolve(result);
+            }
+                 })
+        }else{
+            console.log("33")
+            var sql = 'SELECT  *  FROM Patient  JOIN pathologyOrder ON Patient.id = pathologyOrder.ptId AND Patient.id = '+req;
+            db.query(sql, function (err, result) {
+            if (err) {
+            resolve(err);
+            }else{      
+                resolve(result);
+            }
+                 })
+        }
                      })
     }
     updateOrder = (req,tableName)=>{
