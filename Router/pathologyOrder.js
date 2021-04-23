@@ -11,7 +11,9 @@ router.post('/addOrder', async function(req,res){
         
         if(result){
             res.send("1 record added")
+            console.log(result)
        }else{
+           console.log(err)
            res.send("error in add order")
        }
      }).catch(err=>{
