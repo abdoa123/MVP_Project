@@ -53,7 +53,7 @@ router.post('/getOrderById',async function(req,res){
 
   })
 
-  router.put('/setAccept',function(req,res){  
+router.put('/setAccept',function(req,res){  
     console.log("res:   " , req.body.labFdId);    
 var result = JSON.stringify(req.body.acceptedIds);
 var json = JSON.parse(result);
