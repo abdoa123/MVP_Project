@@ -19,16 +19,8 @@ router.post('/addOrder', async function(req,res){
      })
 });
 
-router.post('/getOrderById',async function(req,res){
-    let  table = `RadioOrder`;
-    var modify = new modifyFunction();
-    modify.getOrder(req.body.id,table).then(result=>{
-        res.send(result);
-    })
-  });
-  router.post('/getOrdersByLabId',async function(req,res){
-
-    var sql = "SELECT * from `RadioOrder` where id = "+req.body.id ;
+router.post('/getOrdersByradioId',async function(req,res){
+    var sql = "SELECT * from `RadioOrder` where radioId = "+req.body.radioId ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
@@ -38,6 +30,15 @@ router.post('/getOrderById',async function(req,res){
         }
     });
   });
+
+router.post('/getOrderById',async function(req,res){
+    let  table = `RadioOrder`;
+    var modify = new modifyFunction();
+    modify.getOrder(req.body.id,table).then(result=>{
+        res.send(result);
+    })
+  });
+
 
   router.put('/updateOrder',async function(req,res){
       let table = `RadioOrder`;
@@ -51,6 +52,27 @@ router.post('/getOrderById',async function(req,res){
       })
 
   })
+  router.put('/setAccept',function(req,res){  
+    console.log("res:   " , req.body.labFdId);    
+var result = JSON.stringify(req.body.acceptedIds);
+var json = JSON.parse(result);
+console.log('asd',result);
+var result1 = result.split(',')
+for(var i =0;i<req.body.acceptedIds.length;i++){
+    console.log(req.body.acceptedIds[i]);
+    if(req.body.acceptedIds[i]==',')
+        continue;
+    //console.log("asdsaasd",parseInt(result1[i]));
+    db.query('UPDATE `RadioOrder` SET rfDid = '+req.body.rfDid+' where id = ' + req.body.acceptedIds[i],function(err,result){
+        if(err){
+            console.log(err);
+           res.send(err);
+        }
+    })
+}
+res.send("done");
+});
+
 
   router.delete('/deleteOrder',async function(req,res){
     let table = `RadioOrder`;

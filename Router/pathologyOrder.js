@@ -31,7 +31,7 @@ router.post('/getOrderById',async function(req,res){
 
   router.get('/getOrdersBypathologyId',async function(req,res){
 
-    var sql = "SELECT * from `pathologyOrder` where id = "+req.body.id ;
+    var sql = "SELECT * from `pathologyOrder` where pathologyId = "+req.body.pathologyId ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
@@ -55,6 +55,26 @@ router.post('/getOrderById',async function(req,res){
 
   })
 
+  router.put('/setAccept',function(req,res){  
+    console.log("res:   " , req.body.labFdId);    
+var result = JSON.stringify(req.body.acceptedIds);
+var json = JSON.parse(result);
+console.log('asd',result);
+var result1 = result.split(',')
+for(var i =0;i<req.body.acceptedIds.length;i++){
+    console.log(req.body.acceptedIds[i]);
+    if(req.body.acceptedIds[i]==',')
+        continue;
+    //console.log("asdsaasd",parseInt(result1[i]));
+    db.query('UPDATE `pathologyOrder` SET LfDId = '+req.body.labFdId+' where id = ' + req.body.acceptedIds[i],function(err,result){
+        if(err){
+            console.log(err);
+           res.send(err);
+        }
+    })
+}
+res.send("done");
+});
   router.delete('/deleteOrder',async function(req,res){
     let table = `pathologyOrder`;
     var modify = new modifyFunction();
