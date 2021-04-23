@@ -63,7 +63,7 @@ for(var i =0;i<req.body.acceptedIds.length;i++){
     if(req.body.acceptedIds[i]==',')
         continue;
     //console.log("asdsaasd",parseInt(result1[i]));
-    db.query('UPDATE `RadioOrder` SET rfDid = '+req.body.rfDid+' where id = ' + req.body.acceptedIds[i],function(err,result){
+    db.query('UPDATE `RadioOrder` SET rfDid = '+req.body.rfDid+', radioId ='+req.body.radioId+' where id = ' + req.body.acceptedIds[i],function(err,result){
         if(err){
             console.log(err);
            res.send(err);

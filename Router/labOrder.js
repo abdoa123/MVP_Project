@@ -84,7 +84,7 @@ router.put('/setAccept',function(req,res){
         if(req.body.acceptedIds[i]==',')
             continue;
         //console.log("asdsaasd",parseInt(result1[i]));
-        db.query('UPDATE `labOrder` SET LfDId = '+req.body.labFdId+' where id = ' + req.body.acceptedIds[i],function(err,result){
+        db.query('UPDATE `labOrder` SET LfDId = '+req.body.labFdId+', labId ='+req.body.labId+' where id = ' + req.body.acceptedIds[i],function(err,result){
             if(err){
                 console.log(err);
                res.send(err);
