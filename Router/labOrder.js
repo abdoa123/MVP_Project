@@ -74,9 +74,9 @@ router.post('/getOrderByPtId',async function(req,res){
   })
 
 router.put('/setAccept',function(req,res){
-    var result = JSON.stringify(req.body);
+    var result = JSON.stringify(req.body.acceptedIds);
     var json = JSON.parse(result);
-    console.log('asd',json.labFdId);
+    console.log('asd',json);
     
     for(var i =0;i<json.acceptedIds.length;i++){
         console.log("hi")
