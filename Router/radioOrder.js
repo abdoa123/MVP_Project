@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('./requestForOrder');
+const db = require('../dataBase/dataBaseConnection');
+
 app.use(bodyParser);
 
 router.post('/addOrder', async function(req,res){

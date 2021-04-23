@@ -70,7 +70,7 @@ for(var j =0;j<req.body.acceptedIds.length;j++){
         continue;
     }
     //console.log("asdsaasd",parseInt(result1[i]));
-    db.query('UPDATE `pathologyOrder` SET pfDId = '+req.body.pfDId+', pathologyId = ' +req.body.pathologyId+' +where id = ' + req.body.acceptedIds[j],function(err,result){
+    db.query('UPDATE `pathologyOrder` SET pfDId = '+req.body.pfDId+', pathologyId = ' +req.body.pathologyId+' where id = ' + req.body.acceptedIds[j],function(err,result){
         if(err){
             console.log(err);
            res.send(err);
