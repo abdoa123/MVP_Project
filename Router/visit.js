@@ -15,14 +15,14 @@ router.post('/addvisit', async function(req,res){
         if(i==0){
             dease+='{'
         }
-        dease += '"'+(json.DD[i].id)+'",'; 
+        dease += (json.DD[i].id)+','; 
     }
     dease+='}'
     for(var i=0;i<json.labsChoices.length;i++){
         if(i==0){
             labsChoices+='{'
         }
-        labsChoices += '"'+json.labsChoices[i].id+'",'; 
+        labsChoices += json.labsChoices[i].id+","; 
         
     }
     labsChoices+='}';
@@ -30,18 +30,18 @@ router.post('/addvisit', async function(req,res){
         if(i==0){
             radioChoices+='{'
         }
-        radioChoices +='"'+json.radioChoices[i].id+'",'; 
+        radioChoices +=json.radioChoices[i].id+','; 
     }
     radioChoices+='}'
     for(var i=0;i<json.pathologyChoices.length;i++){
         if(i==0){
             pathologyChoices+='{'
         }
-        pathologyChoices +='"'+json.pathologyChoices[i].id+'",'; 
+        pathologyChoices +=json.pathologyChoices[i].id+','; 
     }
     pathologyChoices+='}'
-        let a = db.query('INSERT INTO `visit` (chiefComplains, diagnosis, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' +'"'+json.chiefComplains+'",' + 
-         +'"'+ json.diagnosis +'"'+','+'"'+	json.surgeries +'"'+','+'"'+json.investigation +'"'+','+ '"'+dease+'",'
+        let a = db.query('INSERT INTO `visit` (chiefComplains,procedures, diagnosis,surgeries, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' 
+        +'"'+json.chiefComplains+'"' +',"'+json.procedures + ' "' +',' +'"'+ json.diagnosis +'"'+' ,'+'"'+	json.surgeries +'"'+' ,'+'"'+json.investigation +'"'+','+ '"'+dease+'",'
         +'"'+ labsChoices+'"'+','+'"'+pathologyChoices+'"'+','+'"'+radioChoices+'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
