@@ -20,7 +20,7 @@ router.post('/addOrder', async function(req,res){
 });
 
 router.post('/getOrdersByLabId',async function(req,res){
-    var sql = "SELECT * from `labOrder` where id = "+req.body.id ;
+    var sql = "SELECT * from `labOrder` where labId = "+req.body.labId ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
