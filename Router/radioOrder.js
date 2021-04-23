@@ -21,7 +21,7 @@ router.post('/addOrder', async function(req,res){
      })
 });
 
-router.post('/getOrdersByradioId',async function(req,res){
+router.post('/getOrdersByRadioId',async function(req,res){
     var sql = "SELECT * from `RadioOrder` where radioId = "+req.body.radioId ;
     db.query(sql, function (err, result) {
         if (err) {

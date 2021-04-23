@@ -31,7 +31,7 @@ router.post('/getOrderById',async function(req,res){
     })
   });
 
-  router.get('/getOrdersBypathologyId',async function(req,res){
+  router.post('/getOrdersBypathologyId',async function(req,res){
 
     var sql = "SELECT * from `pathologyOrder` where pathologyId = "+req.body.pathologyId ;
     db.query(sql, function (err, result) {
