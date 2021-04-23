@@ -61,6 +61,21 @@ router.post('/getOrderByPtId',async function(req,res){
 
   })
 
+router.put('/setAccept',function(req,res){
+    var result = JSON.stringify(req.body);
+    var json = JSON.parse(result);
+    var aa=labFdId;
+    for(var i =0;i<json.acceptedIds.length;i++){
+        db.query('UPDATE `labOrder` SET LfDId = '+json.labFdId+' where id = ' + json.acceptedIds[i],function(err,result){
+            if(err){
+                console.log(err);
+               res.send(err);
+            }
+        })
+    }
+    res.send("done");
+});
+
   router.delete('/deleteOrder',async function(req,res){
     let table = `labOrder`;
     var modify = new modifyFunction();
