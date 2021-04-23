@@ -73,14 +73,18 @@ router.post('/getOrderByPtId',async function(req,res){
 
   })
 
-router.put('/setAccept',function(req,res){
+router.put('/setAccept',function(req,res){  
+        console.log("res:   " , req.body.labFdId);    
     var result = JSON.stringify(req.body.acceptedIds);
     var json = JSON.parse(result);
-    console.log('asd',json);
-    
-    for(var i =0;i<json.acceptedIds.length;i++){
-        console.log("hi")
-        db.query('UPDATE `labOrder` SET LfDId = '+json.labFdId+' where id = ' + json.acceptedIds[i],function(err,result){
+    console.log('asd',result);
+    var result1 = result.split(',')
+    for(var i =0;i<req.body.acceptedIds.length;i++){
+        console.log(req.body.acceptedIds[i]);
+        if(req.body.acceptedIds[i]==',')
+            continue;
+        //console.log("asdsaasd",parseInt(result1[i]));
+        db.query('UPDATE `labOrder` SET LfDId = '+req.body.labFdId+' where id = ' + req.body.acceptedIds[i],function(err,result){
             if(err){
                 console.log(err);
                res.send(err);
