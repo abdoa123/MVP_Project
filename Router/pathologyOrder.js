@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('./requestForOrder');
+var db = require("../dataBase/dataBaseConnection");
+
 app.use(bodyParser);
 
 router.post('/addOrder', async function(req,res){
@@ -55,18 +57,20 @@ router.post('/getOrderById',async function(req,res){
 
   })
 
-  router.put('/setAccept',function(req,res){  
-    console.log("res:   " , req.body.labFdId);    
+router.put('/setAccept',async function(req,res){  
+    console.log("res:   " , req.body.acceptedIds[2]);    
 var result = JSON.stringify(req.body.acceptedIds);
 var json = JSON.parse(result);
 console.log('asd',result);
 var result1 = result.split(',')
-for(var i =0;i<req.body.acceptedIds.length;i++){
-    console.log(req.body.acceptedIds[i]);
-    if(req.body.acceptedIds[i]==',')
+for(var j =0;j<req.body.acceptedIds.length;j++){
+    console.log(j +" > "+ req.body.acceptedIds.length);
+    if(req.body.acceptedIds[j]==',')
+    {
         continue;
+    }
     //console.log("asdsaasd",parseInt(result1[i]));
-    db.query('UPDATE `pathologyOrder` SET LfDId = '+req.body.labFdId+' where id = ' + req.body.acceptedIds[i],function(err,result){
+    db.query('UPDATE `pathologyOrder` SET pfDId = '+req.body.pfDId+' where id = ' + req.body.acceptedIds[j],function(err,result){
         if(err){
             console.log(err);
            res.send(err);
