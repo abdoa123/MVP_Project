@@ -30,6 +30,17 @@ router.post('/getOrdersByLabId',async function(req,res){
         }
     });
   });
+  router.post('/getOrdersByLabFdId',async function(req,res){
+    var sql = "SELECT * from `labOrder` where LfDId = "+req.body.LfDId ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });
 
 
 router.post('/getOrderByPtId',async function(req,res){
@@ -45,6 +56,7 @@ router.post('/getOrderByPtId',async function(req,res){
         }
     })
   });
+  
 
   router.put('/updateOrder',async function(req,res){
       console.log("update Order: " , req.body);
