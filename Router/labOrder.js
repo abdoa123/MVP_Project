@@ -64,8 +64,10 @@ router.post('/getOrderByPtId',async function(req,res){
 router.put('/setAccept',function(req,res){
     var result = JSON.stringify(req.body);
     var json = JSON.parse(result);
-    var aa=labFdId;
+    console.log('asd',json.labFdId);
+    
     for(var i =0;i<json.acceptedIds.length;i++){
+        console.log("hi")
         db.query('UPDATE `labOrder` SET LfDId = '+json.labFdId+' where id = ' + json.acceptedIds[i],function(err,result){
             if(err){
                 console.log(err);
