@@ -45,7 +45,9 @@ if (!validator.isEmail(req.body.Email)){
 errors.Email = 'the email is not vaild';
 }
 
-if(errors!={}){
+var j=JSON.stringify(errors);  
+console.log(j.length);
+if(j.length>2){
     res.json(errors)
 }else{
     //create Token
