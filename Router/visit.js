@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
 var db = require("../dataBase/dataBaseConnection");
-
+/*
+ chiefComplains : chiefComplains,
+          diagnosis : diagnosis,
+        
+          surgeries : surgeries,
+          surgeryDate : surgeryDate,
+          interventions :interventions,
+          interventionDate :interventionDate,
+          DD : DD,//Deases Type
+          labsChoices : labOrders,
+          pathologyChoices : pathologyOrders,
+          radioChoices : radioOrders, */ 
 router.post('/addvisit', async function(req,res){
     var result = JSON.stringify(req.body);
     var json = JSON.parse(result);
@@ -10,22 +21,20 @@ router.post('/addvisit', async function(req,res){
     let labsChoices ="";
     let radioChoices ="";
     let pathologyChoices ="";
-    console.log(json.DD[0].code)
-    for(var i=0;i<json.DD.length;i++){
+    //console.log(json.DD[0].code)
+   /* for(var i=0;i<json.DD.length;i++){
         if(i==0){
             dease+='{'
         }
         dease += (json.DD[i].id)+','; 
     }
-    dease+='}'
+    dease+='}'*/
     for(var i=0;i<json.labsChoices.length;i++){
-        if(i==0){
-            labsChoices+='{'
-        }
-        labsChoices += json.labsChoices[i].id+","; 
+        console.log(json.labsChoices[i].comments);
         
     }
-    labsChoices+='}';
+    res.send("thanks");
+    /*
     for(var i=0;i<json.radioChoices.length;i++){
         if(i==0){
             radioChoices+='{'
@@ -41,7 +50,7 @@ router.post('/addvisit', async function(req,res){
     }
     pathologyChoices+='}'
         let a = db.query('INSERT INTO `visit` (chiefComplains,procedures, diagnosis,surgeries, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' 
-        +'"'+json.chiefComplains+'"' +',"'+json.procedures + ' "' +',' +'"'+ json.diagnosis +'"'+' ,'+'"'+	json.surgeries +'"'+' ,'+'"'+json.investigation +'"'+','+ '"'+dease+'",'
+        +'"'+json.chiefComplains+'"' +',x"'+json.procedures + ' "' +',' +'"'+ json.diagnosis +'"'+' ,'+'"'+	json.surgeries +'"'+' ,'+'"'+json.investigation +'"'+','+ '"'+dease+'",'
         +'"'+ labsChoices+'"'+','+'"'+pathologyChoices+'"'+','+'"'+radioChoices+'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
@@ -49,7 +58,7 @@ router.post('/addvisit', async function(req,res){
            res.send("1 record inserted")
        }
 
-   });
+   });*/
 });
 
 // router.post('/getSessionById',async function(req,res){
