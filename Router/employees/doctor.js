@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const modifyFunction = require('../Router/requestsModiy');
+const modifyFunction = require('../requestsModiy');
 app.use(bodyParser);
-const db = require('../dataBase/dataBaseConnection');
+const db = require('../../dataBase/dataBaseConnection');
 
 
 router.post('/addDoctor', async function(req,res){
-    // let a = db.query('INSERT INTO `doctor` (firstName, lastName, Email,degree,address,phone,userName,password) VALUES  (' + req.body.firstName + 
-    // ',' + req.body.lastName +','+ req.body.Email  +
-    // ',' + req.body.degree +','+ req.body.Address + ',' + req.body.Phone +','+ req.body.userName + ','+req.body.password +')', function (err1, result2) {
         let a = db.query('INSERT INTO `doctor` (firstName, lastName, Email,degree,address,phone,userName,password , Date) VALUES  (' +'"'+ req.body.firstName +'"'+ 
         ',' +'"'+ req.body.lastName +'"' +','+'"'+ req.body.Email + '"'+
         ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.Address + '"'+',' + req.body.phone +','+'"'+ req.body.userName +'"'+ ','+'"'+req.body.password +'"'+','+'"'+req.body.Date+'"'+')', function (err1, result2) {

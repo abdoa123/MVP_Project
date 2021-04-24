@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const modifyFunction = require('../Router/requestsModiy');
+const modifyFunction = require('../requestsModiy');
 app.use(bodyParser);
-const db = require('../dataBase/dataBaseConnection');
+const db = require('../../dataBase/dataBaseConnection');
 
 
 router.post('/addAssistant', async function(req,res){

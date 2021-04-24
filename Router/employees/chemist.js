@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 app.use(bodyParser);
-const db = require('../dataBase/dataBaseConnection');
-const modifyFunction = require('../Router/requestsModiy');
+const db = require('../../dataBase/dataBaseConnection');
+const modifyFunction = require('../requestsModiy');
 
 
 router.post('/addChemist', async function(req,res){

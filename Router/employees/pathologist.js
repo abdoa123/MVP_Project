@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const modifyFunction = require('../Router/employee');
+const modifyFunction = require('../employees/employee');
 app.use(bodyParser);
-const db = require('../dataBase/dataBaseConnection');
+const db = require('../../dataBase/dataBaseConnection');
 
 
 router.post('/addPathologist', async function(req,res){

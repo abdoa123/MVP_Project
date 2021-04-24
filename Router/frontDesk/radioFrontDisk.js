@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const modifyFunction = require('../Router/requestsModiy');
+const modifyFunction = require('../requestsModiy');
 app.use(bodyParser);
 
 router.post('/addPerson', async function(req,res){

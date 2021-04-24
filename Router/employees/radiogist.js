@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 app.use(bodyParser);
-const db = require('../dataBase/dataBaseConnection');
+const db = require('../../dataBase/dataBaseConnection');
 
 
 router.post('/addRadiogist', async function(req,res){

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var db = require("../dataBase/dataBaseConnection");
+var db = require("../../dataBase/dataBaseConnection");
 
 
 //get user permission by userId
