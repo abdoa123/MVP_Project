@@ -1,64 +1,77 @@
 const express = require('express');
 const router = express.Router();
 var db = require("../dataBase/dataBaseConnection");
+const modifyFunction = require('./requestForOrder');
+
 /*
- chiefComplains : chiefComplains,
+        chiefComplains : chiefComplains,
           diagnosis : diagnosis,
-        
           surgeries : surgeries,
           surgeryDate : surgeryDate,
           interventions :interventions,
-          interventionDate :interventionDate,
-          DD : DD,//Deases Type
-          labsChoices : labOrders,
-          pathologyChoices : pathologyOrders,
-          radioChoices : radioOrders, */ 
-router.post('/addvisit', async function(req,res){
+          interventionDate :interventionDate, */
+router.post('/addvisit', async function (req, res) {
+    var modify = new modifyFunction();
+    let dease = "";
+    let table = `RadioOrder`;
+    let table1 = `labOrder`;
+    let table2 = `pathologyOrder`;
     var result = JSON.stringify(req.body);
     var json = JSON.parse(result);
-    console.log('asd',json.DD[0].id);
-    let dease ="";
-    let labsChoices ="";
-    let radioChoices ="";
-    let pathologyChoices ="";
-    //console.log(json.DD[0].code)
-   /* for(var i=0;i<json.DD.length;i++){
-        if(i==0){
-            dease+='{'
-        }
-        dease += (json.DD[i].id)+','; 
-    }
-    dease+='}'*/
-    for(var i=0;i<json.labsChoices.length;i++){
-        console.log(json.labsChoices[i].comments);
-        
-    }
-    res.send("thanks");
-    /*
-    for(var i=0;i<json.radioChoices.length;i++){
-        if(i==0){
-            radioChoices+='{'
-        }
-        radioChoices +=json.radioChoices[i].id+','; 
-    }
-    radioChoices+='}'
-    for(var i=0;i<json.pathologyChoices.length;i++){
-        if(i==0){
-            pathologyChoices+='{'
-        }
-        pathologyChoices +=json.pathologyChoices[i].id+','; 
-    }
-    pathologyChoices+='}'
-        let a = db.query('INSERT INTO `visit` (chiefComplains,procedures, diagnosis,surgeries, investigation,deasesId,labId,pathologyId,radioId) VALUES  (' 
-        +'"'+json.chiefComplains+'"' +',x"'+json.procedures + ' "' +',' +'"'+ json.diagnosis +'"'+' ,'+'"'+	json.surgeries +'"'+' ,'+'"'+json.investigation +'"'+','+ '"'+dease+'",'
-        +'"'+ labsChoices+'"'+','+'"'+pathologyChoices+'"'+','+'"'+radioChoices+'"'+')', function (err1, result2) {
-       if (err1) {
-           console.log(err1)
-       } else {
-           res.send("1 record inserted")
-       }
+    let dease = "";
 
-   });*/
+    for (var i = 0; i < json.DD.length; i++) {
+        if (i == 0) {
+            dease += '{'
+        }
+        dease += (json.DD[i].id) + ',';
+    }
+    dease += '}'
+
+    for (var i = 0; i < json.labsChoices.length; i++) {
+        modify.addOrder(json.labsChoices[i], table1).then(result => {
+
+            if (result) {
+                continue;
+            } else {
+                sres.send("error in add order")
+            }
+        })
+
+    }
+    for (var i = 0; i < json.radioChoices.length; i++) {
+        modify.addOrder(json.radioChoices[i], table).then(result => {
+
+            if (result) {
+                continue;
+            } else {
+                sres.send("error in add  radio ")
+            }
+        })
+
+    }
+    for (var i = 0; i < json.pathologyChoices.length; i++) {
+        modify.addOrder(json.pathologyChoices[i], table2).then(result => {
+
+            if (result) {
+                continue;
+            } else {
+                sres.send("error in add pathology")
+            }
+        })
+
+    }
+
+    let a = db.query('INSERT INTO `visit` (chiefComplains,interventions, diagnosis,surgeries,deasesId,surgeryDate,interventionDate) VALUES  ('
+        + '"' + json.chiefComplains + '"' + ',"' + json.interventions + ' "' + ',' + '"' + json.diagnosis + '"' + ' ,' + '"' + json.surgeries + '"'  + ',' + '"' + dease + '",'
+        + '"' + json.surgeryDate + '"' + ',' + '"' + json.interventionDate + '"' + ')', function (err1, result2) {
+            if (err1) {
+                console.log(err1)
+            } else {
+                res.send("1 record inserted")
+            }
+
+        });
 });
 
 // router.post('/getSessionById',async function(req,res){

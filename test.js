@@ -26,14 +26,13 @@ test('responds to requests', (t) => {
     })();
   });
 });*/
-let data = {
-  name:"abdo",
-  age:"23"
-}
-let stringdata = JSON.stringify(data)
+let data ="welcome Dr sharf in our QR test /n name:abdo \n age:27 \n phone: 01205119956"
 
+let stringdata = JSON.stringify(data)
+var json =  JSON.parse(stringdata); 
+stringdata = JSON.stringify(data)
 const QRCode = require('qrcode')
 QRCode.toDataURL(stringdata, function (err, url) {
-  if(err) return console.log("error occured")
+  if(err) return console.log(err)
   console.log(url)
 })
