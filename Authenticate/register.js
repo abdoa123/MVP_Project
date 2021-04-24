@@ -3,7 +3,8 @@ const router = express.Router();
 const jwt = require("jsonwebtoken") //Token module
 const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
-var cors = require('cors');
+var cors = require('cors')
+const validator = require('validator')
 
 var db = require("../dataBase/dataBaseConnection");
 const { token } = require('morgan');
@@ -21,7 +22,34 @@ var user = {
 }
 var chee = false;
 router.post('/signup', async function (req, res) {
+    var errors= {};
+    if (!validator.isLength(req.body.userName, {
+        min: 2,
+        max: 30
+    })) {
+    errors.userName = 'Username should be between 2 and 30 characters'
+}
+if (validator.isEmpty(req.body.userName)) {
+    errors.userName = 'Username is required'
+}
+if (validator.isEmpty(req.body.Password)) {
+    errors.Password = 'Password is required'
+}
+if (!validator.isLength(req.body.Password, {
+        min: 6,
+        max: 30
+    })) {
+    errors.Password = 'Password should be at least 6 characters'
+}
+if (!validator.isEmail(req.body.Email)){
+errors.Email = 'the email is not vaild';
+}
 
+var j=JSON.stringify(errors);  
+console.log(j.length);
+if(j.length>2){
+    res.json(errors)
+}else{
     //create Token
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;
@@ -55,7 +83,7 @@ router.post('/signup', async function (req, res) {
     });
     console.log(chee);
 
-
+}
 });
 
 module.exports = router;

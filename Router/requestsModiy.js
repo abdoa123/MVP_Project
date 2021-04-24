@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 var db = require("../dataBase/dataBaseConnection");
-app.use(bodyParser);
 
 class requstss{
     addPerson = (req,tableName)=>{
