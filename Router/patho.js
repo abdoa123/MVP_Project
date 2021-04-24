@@ -16,7 +16,7 @@ router.get('/getById',function(req,res){
     });
 });
 
-router.get('/getAllergy',function(req,res){
+router.get('/getAll',function(req,res){
 db.query('select * from `patho` ',function(err,result){
 if(err){
     res.send(err);
