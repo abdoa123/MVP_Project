@@ -12,7 +12,6 @@ const modifyFunction = require('./requestForOrder');
           interventionDate :interventionDate, */
 router.post('/addvisit', async function (req, res) {
     var modify = new modifyFunction();
-    let dease = "";
     let table = `RadioOrder`;
     let table1 = `labOrder`;
     let table2 = `pathologyOrder`;
