@@ -26,23 +26,26 @@ router.post('/addvisit', async function (req, res) {
         dease += (json.DD[i].id) + ',';
     }
     dease += '}'
-
+    let test = true;
     for (var i = 0; i < json.labsChoices.length; i++) {
         modify.addOrder(json.labsChoices[i], table1).then(result => {
 
             if (result) {
-                continue;
+               test = true;
             } else {
                 sres.send("error in add order")
+                test = false;
             }
         })
-
+        if(!test){
+            break;
+        }
     }
     for (var i = 0; i < json.radioChoices.length; i++) {
         modify.addOrder(json.radioChoices[i], table).then(result => {
 
             if (result) {
-                continue;
+                test = true;
             } else {
                 sres.send("error in add  radio ")
             }
@@ -53,7 +56,7 @@ router.post('/addvisit', async function (req, res) {
         modify.addOrder(json.pathologyChoices[i], table2).then(result => {
 
             if (result) {
-                continue;
+                test = true;
             } else {
                 sres.send("error in add pathology")
             }
