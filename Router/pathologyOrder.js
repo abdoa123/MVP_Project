@@ -31,7 +31,7 @@ router.post('/getOrderById',async function(req,res){
     })
   });
 
-  router.get('/getOrdersBypathologyId',async function(req,res){
+  router.post('/getOrdersBypathologyId',async function(req,res){
 
     var sql = "SELECT * from `pathologyOrder` where pathologyId = "+req.body.pathologyId ;
     db.query(sql, function (err, result) {
@@ -70,7 +70,7 @@ for(var j =0;j<req.body.acceptedIds.length;j++){
         continue;
     }
     //console.log("asdsaasd",parseInt(result1[i]));
-    db.query('UPDATE `pathologyOrder` SET pfDId = '+req.body.pfDId+', pathologyId = ' +req.body.pathologyId+' +where id = ' + req.body.acceptedIds[j],function(err,result){
+    db.query('UPDATE `pathologyOrder` SET pfDId = '+req.body.pfDId+', pathologyId = ' +req.body.pathologyId+' where id = ' + req.body.acceptedIds[j],function(err,result){
         if(err){
             console.log(err);
            res.send(err);
