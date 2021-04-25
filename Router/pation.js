@@ -64,9 +64,22 @@ router.post('/addpt', async function (req, res) {
       })
 });
 
-router.post('/getById',function(req,res){
+router.post('/getAllergyById',function(req,res){
    console.log('function Get Patient : ' , req.body.id);
-   var sql = "SELECT * from `Patient` where id = " + req.body.id ;
+   var sql = 'SELECT  *  FROM pt_allergy  where pt_allergy.ptId = '+req.body.id ;
+   db.query(sql, function (err, result) {
+       if (err) {
+          
+           res.send(err); 
+       }
+       else{
+          res.send(result);
+       }
+   });
+});
+router.post('/getProblemsById',function(req,res){
+   console.log('function Get Patient : ' , req.body.id);
+   var sql = 'SELECT  *  FROM pt_problems  where pt_problems.ptId = '+req.body.id ;
    db.query(sql, function (err, result) {
        if (err) {
           
