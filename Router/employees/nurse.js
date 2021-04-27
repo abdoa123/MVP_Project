@@ -19,6 +19,7 @@ const db = require('../../dataBase/dataBaseConnection');
             pain: this.state.pain,
             smokingStatus: this.state.smokingStatus,
             headC: this.state.headCircumference,
+            pId:1
  */
 
 router.post('/addNurse', async function(req,res){
