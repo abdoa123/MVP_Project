@@ -13,16 +13,26 @@ var user = {
 var token ;
 router.post("/",async function(req,res){
 
-     db.query('select * from `users` where userName = ' +'"'+req.body.userName+'"' ,function (err, result){
+      db.query('select * from `users` where userName = ' +'"'+req.body.userName+'"' ,function (err, result){
     if (err){
         res.send(err);
     }else{
-        var ress=JSON.stringify(req.body.Password);  
-    console.log(ress)
-     bcrypt.compare(ress,result[0]["hash"]).then(test=>{
-        console.log(test);
-    })
+        var ress=JSON.stringify(req.body.Password);
+        var ress1=JSON.stringify(result[0]["hash"]);
 
+        console.log(ress1);
+        console.log(ress);
+        bcrypt.compare(req.body.Password,result[0]["hash"], function(err1, res1) {
+            console.log(res1);
+            if (err1){
+               res.send(err1)
+              }
+              if (res1){
+                  res.send(res1);
+                // Send JWT
+              }
+        })
+     
     }
     /*
             if(check){
