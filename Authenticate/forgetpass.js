@@ -36,14 +36,14 @@ router.post('/forgetpass', async function (req, res) {
     console.log(req.body.email);
     let userEmail = req.body.email;
     let userValidationCode = parseInt( Math.random() * (9000 - 1000) + 1000);
-    db.query('UPDATE `users` SET code = '+userValidationCode+"where Email= "+req.body.email,function(err,result){
+    db.query('UPDATE `users` SET code = '+'"'+userValidationCode+'"'+" where Email= "+'"'+req.body.email+'"',function(err,result){
       if(err){
           console.log(err);
-         resolve(false);
+        res.send(err)
       }
       else{
           console.log(result);
-          resolve(true);
+         res.send("done")
       }
   })
     console.log(userValidationCode);
