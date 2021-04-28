@@ -21,7 +21,6 @@ const db = require('../../dataBase/dataBaseConnection');
             headC: this.state.headCircumference,
             pId:1
  */
-
 router.post('/addNurse', async function(req,res){
     let a = db.query('INSERT INTO `nurse` (firstName, lastName, Email,degree,address,phone,userName,password , Date) VALUES  (' +'"'+ req.body.firstName +'"'+ 
         ',' +'"'+ req.body.lastName +'"' +','+'"'+ req.body.Email + '"'+
@@ -35,6 +34,32 @@ router.post('/addNurse', async function(req,res){
 
    });
 });
+
+router.post('/add', async function(req,res){
+    let a = db.query('INSERT INTO `NurseModule` (temp, pulse, bloodPressure,respiratoryRate,respiratoryRate,OXSat,height,weight,BMI,pain,smokingStatus,headC,time,date,pId) VALUES  (' +'"'+ req.body.temp +'"'+ 
+        ',' +'"'+ req.body.pulse +'"' +','+'"'+ req.body.bloodPressure + '"'+ ',' +'"'+ req.body.respiratoryRate +'"' +','+'"'+ req.body.OXSat + '"'+ ',' +'"'+ req.body.height +'"' +','+'"'+ req.body.weight + '"'+
+        ',' +'"'+ req.body.BMI+'"' +','+ '"'+req.body.pain + '"'+',' + req.body.smokingStatus +','+'"'+ req.body.headC +'"'+ ','+'"'+req.body.time +'"'+','+'"'+req.body.date+'"'+', '+""+req.body.pId+')', function (err1, result2) {
+       if (err1) {
+           console.log(err1)
+       } else {
+
+           res.send("1 record inserted")
+       }
+
+   });
+});
+
+router.post('/getByDate',async function(req,res){
+    var sql = "SELECT * from `NurseModule` where date = " + req.body.date ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });
 
 router.get('/getNurse',async function(req,res){
     var sql = "SELECT * from `nurse` where id = " + req.body.id ;

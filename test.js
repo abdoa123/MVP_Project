@@ -27,11 +27,11 @@ test('responds to requests', (t) => {
   });
 });*/
 
+/*let stringdata = JSON.stringify(data)
+var json =  JSON.parse(stringdata); 
+stringdata = JSON.stringify(data)*/
 let data ="welcome Dr sharf in our QR test ,\n" + "user Serial Number: 95954"
 
-let stringdata = JSON.stringify(data)
-var json =  JSON.parse(stringdata); 
-stringdata = JSON.stringify(data)
 const QRCode = require('qrcode')
 QRCode.toDataURL(data, function (err, url) {
   if(err) return console.log(err)
