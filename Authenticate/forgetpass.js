@@ -80,7 +80,13 @@ router.post('/getCode',function(req,res){
           res.send(err); 
       }
       else{
-         res.send(result);
+        if(req.body.code==result[0].code){
+          res.send(true)
+        }else{
+
+          res.send(false);
+        }
+
       }
   });
 });
