@@ -36,6 +36,16 @@ router.post('/forgetpass', async function (req, res) {
     console.log(req.body.email);
     let userEmail = req.body.email;
     let userValidationCode = parseInt( Math.random() * (9000 - 1000) + 1000);
+    db.query('UPDATE `users` SET code = '+userValidationCode+"where Email= "+req.body.email,function(err,result){
+      if(err){
+          console.log(err);
+         resolve(false);
+      }
+      else{
+          console.log(result);
+          resolve(true);
+      }
+  })
     console.log(userValidationCode);
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -60,8 +70,19 @@ router.post('/forgetpass', async function (req, res) {
           console.log('Email sent: ' + info.response);
         }
       });
+});
 
-
+router.post('/getCode',function(req,res){
+  var sql = 'SELECT  code  FROM `users  where Email = '+req.body.email ;
+  db.query(sql, function (err, result) {
+      if (err) {
+         
+          res.send(err); 
+      }
+      else{
+         res.send(result);
+      }
+  });
 });
 
 
