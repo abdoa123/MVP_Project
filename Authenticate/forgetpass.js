@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   });
 
 
-app.use(bodyParser);
+
 var user = {
     tocken: "",
     userName: "",
