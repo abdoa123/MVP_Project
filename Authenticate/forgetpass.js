@@ -73,22 +73,33 @@ router.post('/forgetpass', async function (req, res) {
 });
 
 router.post('/getCode',function(req,res){
-  var sql = 'SELECT  code  FROM `users  where Email = '+req.body.email ;
-  db.query(sql, function (err, result) {
-      if (err) {
-         
-          res.send(err); 
-      }
-      else{
-        if(req.body.code==result[0].code){
-          res.send(true)
-        }else{
-
-          res.send(false);
-        }
-
-      }
+  db.query('UPDATE `users` SET code = '+userValidationCode+"where Email= "+req.body.email,function(err,result){
+    if(err){
+        console.log(err);
+       res.send(err)
+    }
+    else{
+        console.log(result);
+        res.send(result);
+    }
+})
   });
+
+  router.post('/updatePass',function(req,res){
+    var newHash = await bcrypt.hash(req.body.newPassword, 10);
+
+    db.query('UPDATE `users` SET hash = '+newHash+"where Email= "+req.body.email,function(err,result){
+      if (err) {
+           
+            res.send(err); 
+        }
+        else{
+        
+          res.send("done");
+        }
+    });
+
+
 });
 
 
