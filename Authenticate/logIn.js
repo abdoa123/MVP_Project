@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const jwt= require("jsonwebtoken") //Token module
 const bodyParser = require('body-parser');
-const validator = require('validator')
-
 const bcrypt = require("bcrypt");
 // connect to database
 var db=require("../dataBase/dataBaseConnection");
@@ -13,31 +11,38 @@ var user = {
     password: "",
 }
 var token ;
-router.post("/",function(req,res){
- 
-    var test =  db.query('select * from `users` where userName =' + '"'+req.body.userName +'"'+';',function (err, result) {
-        if (err){
-            res.send(err);
-        };
-        console.log('res=> ',result);
-        if(result.length===0){
-            res.send("user is not Exisit")
-        }else{
-      bcrypt.compare(req.body.Password,result[0].hash).then(result=>{
-        if(result){
-            jwt.sign({ user: user }, 'secretkey', (err, t) => {
-                res.send(t);
-                  });
-        }
-        else{
-            res.send("wrong password");
-        }
-    });
-}
-   
+router.post("/",async function(req,res){
+
+     db.query('select * from `users` where userName = ' +'"'+req.body.userName+'"' ,function (err, result){
+    if (err){
+        res.send(err);
+    }else{
+        var ress=JSON.stringify(req.body.Password);  
+    console.log(ress)
+     bcrypt.compare(ress,result[0]["hash"]).then(test=>{
+        console.log(test);
+    })
+
+    }
+    /*
+            if(check){
+                  jwt.sign({ user: user }, 'secretkey', (err, t) => {
+                    token = t;
+                    db.query('UPDATE `users` SET Token = ' +'"'+ token + '" '+ ' WHERE  userName = '+'"'+req.body.userName +'"',function(err,ress){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            res.send(token);
+                        }
+                    });
+                });
+            }
+        
+        }*/
 });
 
-
+    
 
 });
 

@@ -87,7 +87,7 @@ router.post('/getCode',function(req,res){
 
   router.post('/updatePass',async function(req,res){
     var newHash = await bcrypt.hash(req.body.newPassword, 10);
-
+    
     db.query('UPDATE `users` SET hash = '+newHash+"where Email= "+req.body.email,function(err,result){
       if (err) {
            
