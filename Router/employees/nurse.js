@@ -36,7 +36,7 @@ router.post('/addNurse', async function(req,res){
 });
 
 router.post('/add', async function(req,res){
-    let a = db.query('INSERT INTO `NurseModule` (temp, pulse, bloodPressure,respiratoryRate,respiratoryRate,OXSat,height,weight,BMI,pain,smokingStatus,headC,time,date,pId) VALUES  (' +'"'+ req.body.temp +'"'+ 
+    let a = db.query('INSERT INTO `NurseModule` (temp, pulse, bloodPressure,respiratoryRate,OXSat,height,weight,BMI,pain,smokingStatus,headC,time,date,pId) VALUES  (' +'"'+ req.body.temp +'"'+ 
         ',' +'"'+ req.body.pulse +'"' +','+'"'+ req.body.bloodPressure + '"'+ ',' +'"'+ req.body.respiratoryRate +'"' +','+'"'+ req.body.OXSat + '"'+ ',' +'"'+ req.body.height +'"' +','+'"'+ req.body.weight + '"'+
         ',' +'"'+ req.body.BMI+'"' +','+ '"'+req.body.pain + '"'+',' + req.body.smokingStatus +','+'"'+ req.body.headC +'"'+ ','+'"'+req.body.time +'"'+','+'"'+req.body.date+'"'+', '+""+req.body.pId+')', function (err1, result2) {
        if (err1) {
@@ -61,6 +61,18 @@ router.post('/getByDate',async function(req,res){
     });
   });
 
+  router.post('/getByPId',async function(req,res){
+    var sql = "SELECT * from `NurseModule` where pId = " + req.body.pId ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });
+
 router.get('/getNurse',async function(req,res){
     var sql = "SELECT * from `nurse` where id = " + req.body.id ;
     db.query(sql, function (err, result) {
@@ -72,6 +84,19 @@ router.get('/getNurse',async function(req,res){
         }
     });
   });
+
+  router.delete('/delete',async function(req,res){
+    db.query('DELETE  FROM `NurseModule` where id = ' + req.body.id,function(err,result){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.send(result);
+        }
+    })
+    
+  })
+
   router.get('/getAll',async function(req,res){
     var sql = "SELECT * from `nurse`" ;
     db.query(sql, function (err, result) {
