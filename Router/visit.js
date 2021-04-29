@@ -64,9 +64,9 @@ router.post('/addvisit', async function (req, res) {
 
     }
 
-    let a = db.query('INSERT INTO `visit` (chiefComplains,interventions, diagnosis,surgeries,deasesId,surgeryDate,interventionDate) VALUES  ('
+    let a = db.query('INSERT INTO `visit` (chiefComplains,interventions, diagnosis,surgeries,deasesId,surgeryDate,interventionDate,ptId) VALUES  ('
         + '"' + json.chiefComplains + '"' + ',"' + json.interventions + ' "' + ',' + '"' + json.diagnosis + '"' + ' ,' + '"' + json.surgeries + '"'  + ',' + '"' + dease + '",'
-        + '"' + json.surgeryDate + '"' + ',' + '"' + json.interventionDate + '"' + ')', function (err1, result2) {
+        + '"' + json.surgeryDate + '"' + ',' + '"' + json.interventionDate + '"' +','+req.bosdy.ptId+ ')', function (err1, result2) {
             if (err1) {
                 console.log(err1)
             } else {

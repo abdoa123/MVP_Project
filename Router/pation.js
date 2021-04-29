@@ -103,5 +103,18 @@ router.post('/getPtById',function(req,res){
        }
    });
 });
+router.post('/getPtByuserId',function(req,res){
+   console.log('function Get Patient : ' , req.body.id);
+   var sql = 'SELECT  *  FROM Patient  where Patient.id = '+req.body.id ;
+   db.query(sql, function (err, result) {
+       if (err) {
+          
+           res.send(err); 
+       }
+       else{
+          res.send(result);
+       }
+   });
+});
 
 module.exports = router;
