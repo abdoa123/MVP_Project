@@ -6,8 +6,8 @@ router.post('/addSession', async function(req,res){
     let startDate= new Date();
     var dt1 = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()+1,startDate.getHours(),startDate.getMinutes(),startDate.getSeconds());
 
-        let a = db.query('INSERT INTO `sessions` (ptId, drId, startDate,endDate) VALUES  (' +req.body.ptId + 
-        ',' + req.body.drId +','+'"'+startDate +'"'+','+'"'+dt1 +'"'+')', function (err1, result2) {
+        let a = db.query('INSERT INTO `sessions` (ptId, userId, startDate,endDate) VALUES  (' +req.body.ptId + 
+        ',' + req.body.userId +','+'"'+startDate +'"'+','+'"'+dt1 +'"'+')', function (err1, result2) {
        if (err1) {
            console.log(err1)
        } else {
