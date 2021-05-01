@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const jwt = require("jsonwebtoken") //Token module
+const bcrypt = require("bcrypt");
+
 const modifyFunction = require('../requestsModiy');
 app.use(bodyParser);
 const db = require('../../dataBase/dataBaseConnection');
@@ -14,21 +17,26 @@ router.post('/addDoctor', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;
     });
-    var newHash = await bcrypt.hash(req.body.Password, 10);
+    var newHash = await bcrypt.hash(req.body.password, 10);
     db.query("INSERT INTO `users` (userName, hash,Email, Token ) VALUES  ('" + req.body.userName + "'," + "'" + newHash + "'" + ",'" + req.body.Email + "'," + "'" + user["tocken"] + "'" + ");", function (err1, result2) {
         if (err1) {
             console.log(err1)
         } else {
-            console.log(result2[0]["id"])
-            console.log(result2[0])
+            console.log(result2.insertId)
             db.query('INSERT INTO `doctor` (firstName, lastName,degree,address,phone, Date,userId) VALUES  (' +'"'+ req.body.firstName +'"'+ 
             ',' +'"'+ req.body.lastName +'"' +
-            ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.Address + '"'+',' + req.body.phone +'"'+req.body.Date+'"'+','+result2[0]["id"]+')', function (err1, result1) {
+            ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.Address + '"'+',' + req.body.phone +',"'+req.body.Date+'"'+','+parseInt(result2.insertId)+')', function (err1, result1) {
            if (err1) {
                console.log(err1)
            } else {
-    
-               res.send("1 record inserted")
+                db.query('insert into `permissiopn` (userId,roleId) VALUES  (' +result2.insertId+','+ 8+')',function (err3, result1) {
+                    if(err3){
+                        console.log(err3)
+                        res.send(err3)
+                    }else{
+                    res.send("1 record inserted");
+                    }
+                })
            }
         });
 

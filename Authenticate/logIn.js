@@ -6,9 +6,8 @@ const bcrypt = require("bcrypt");
 // connect to database
 var db=require("../dataBase/dataBaseConnection");
 var user = {
-    tocken: "",
-    userName: "",
-    password: "",
+    role: "",
+    userId: "",
 }
 var token ;
 router.post("/",async function(req,res){
@@ -28,7 +27,17 @@ router.post("/",async function(req,res){
                res.send(err1)
               }
               if (res1){
-                  res.send(res1);
+                  console.log(result[0]["id"])
+                 db.query('select * from `permissiopn` where userId ='+ result[0]["id"], function(err4, res4) {
+                   if(err){
+                       console.log(err4)
+                   }else{
+                    user["role"] = res4[0]["roleId"];
+                     user["userId"]= result[0]["id"];
+                     console.log(user);
+                    res.send(user);
+                   }
+                 })
                 // Send JWT
               }
         })

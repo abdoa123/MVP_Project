@@ -7,18 +7,23 @@ const db = require('../dataBase/dataBaseConnection');
 router.post('/addpt', async function (req, res) {
    var result = JSON.stringify(req.body);
    var json = JSON.parse(result);
-   db.query('select * from `users` where Email= ' +'"'+json.email+'"',function(resu,errr){
+   db.query('select * from `users` where Email= ' +'"'+json.email+'"',function(errr,resu){
    if(errr){
-      console.log(errr);
+      console.log("errrrrrrrroororoororo",errr);
       res.send("error");
    }else{
+      console.log("In elseeeeeee");
+      console.log(resu[0]["id"])
       var userId = resu[0]["id"];
+      console.log("ressssssssss",resu[0]["id"]);
+
       db.query('INSERT INTO ' + '`Patient`' + '(phone,address,birthDate,maritalStatus,bloodGroup,firstName,lastName,secondName,userId) VALUES(' + '"' + json.phone + '"' + ',' + '"' + json.address + '"' + ','   + '"' + json.birthDate + '"' + ',' +
       '"' + json.status + '"' + ',' + '"' + json.BloodGroup + '"' + ',' + '"' + json.firstName + '"' + ',' + '"' + json.lastName + '" ,'+'"'+json.secondName+'" ,' +parseInt(userId)+ ');', function (err, result) {
          if (err) {
             console.log("err=>>" + err);
             res.send(err);
          } else {
+            console.log(result)
             for (var i = 0; i < json.Allergy.length; i++) {
                db.query('INSERT INTO ' + '`pt_allergy`' + '(type,reaction,notes,ptid) VALUES(' + '"' + json.Allergy[i].type + '"' + ',' + '"' + json.Allergy[i].reaction + '"' + ',' + '"' + json.Allergy[i].notes + '",' + result["insertId"] + ');', function (err, result2) {
                   if (err) {
