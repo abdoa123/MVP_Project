@@ -62,7 +62,7 @@ class requstss {
     getAppointment = (req) => {
         return new Promise((resolve, reject) => {
 
-            db.query('select * FROM  `appoinment` where date = ' + '"' + req.date + '"' + 'and drFDId = ' + req.drFDId, function (err, result) {
+            db.query('select * FROM  `appoinment` where date = ' + '"' + req.date + '"' + 'and ' + req.check+'= ' + req.id, function (err, result) {
                 if (err) {
                     resolve(err);
                 }
@@ -85,20 +85,23 @@ class requstss {
             })
         })
     }
-    addAppointment = (req, endtime2, pataint) => {
+    addAppointment = (req, endtime2, id) => {
         return new Promise((resolve, reject) => {
-            this.getPtId(pataint).then(res => {
                 this.getAppointment(req).then(res => {
+                    var noS = req.patientName;
+                    noS = noS.replace(/\s/g, "");
+                    console.log(noS);
                     console.log(res);
                     var result = JSON.stringify(res);
                     var json = JSON.parse(result);
                     if (res.length === 0) {
                         console.log("test");
+                       
                         var t = req.startTime + ":00";
-                        console.log(req.patientName + ',' + req.reason +
-                            ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + req.drFDId + ',' + req.date)
-                        db.query('INSERT INTO `appoinment` (patientName, reason,startDate,endDate,drFDId,date,ptId) VALUES  (' + '"' + pataint + '"' + ',' + '"' + req.reason + '"' +
-                            ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + req.drFDId + ',' + '"' + req.date + '"' + ')', function (err1, result2) {
+                        console.log( noS+ ',' + req.reason +
+                            ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + req.check + ',' + req.date)
+                        db.query('INSERT INTO `appoinment` (patientName, reason,startDate,endDate,date,ptId,'+req.check+') VALUES  (' + '"' + noS + '"' + ',' + '"' + req.reason + '"' +
+                            ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + '"' + req.date + '" ,' +id+ ','+req.id+')', function (err1, result2) {
                                 if (err1) {
                                     console.log(err1)
                                     resolve(err1);
@@ -137,20 +140,23 @@ class requstss {
                                 'Current time is NOT between startTime and endTime');
                             console.log('dt3 = ' + dt3 + ',  dt1 = ' + dt1 + ', dt2 =' + dt2)
                             if ((dt3 >= dt1 && dt3 <= dt2)) {
-
                                 resolve("reject");
+                                return 0;
+                                console.log("ad")
                             }
 
                         }
 
                         var t = req.startTime + ":00";
-                        db.query('INSERT INTO `appoinment` (pationName, reason,startDate,endDate,drFDId,date ) VALUES  (' + req.pationName + ',' + req.reason +
-                            ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + req.drFDId + ',' + req.date + ')', function (err1, result2) {
+                        db.query('INSERT INTO `appoinment` (patientName, reason,startDate,endDate,date,ptId, '+req.check+' ) VALUES  (' +'"'+ noS +'"'+ ',' +'"'+ req.reason+'"'+
+                            ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' +'"'+ req.date +'"' +','+id+','+req.id+')', function (err1, result2) {
                                 if (err1) {
+                                    console.log(err1);
+
                                     resolve(err1);
 
                                 } else {
-
+                                console.log(result2);
                                     resolve(result2);
                                 }
 
@@ -159,7 +165,7 @@ class requstss {
                     }
                 })
 
-            })
+            
 
 
         });
