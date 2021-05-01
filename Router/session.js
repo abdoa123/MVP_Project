@@ -19,7 +19,7 @@ router.post('/addSession', async function(req,res){
 });
 
 router.post('/getSessionById',async function(req,res){
-    var sql = "SELECT * from `doctor` where id = " + req.body.id ;
+    var sql = "SELECT * from `sessions` where id = " + req.body.id ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
