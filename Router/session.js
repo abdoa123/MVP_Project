@@ -18,8 +18,8 @@ router.post('/addSession', async function(req,res){
    });
 });
 
-router.post('/getSessionById',async function(req,res){
-    var sql = "SELECT * from `sessions` where id = " + req.body.id ;
+router.post('/getSessionByDate',async function(req,res){
+    var sql = "SELECT * from `sessions` where startDate >= " + req.body.date  +'and endDate <= '+req.body.date;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
