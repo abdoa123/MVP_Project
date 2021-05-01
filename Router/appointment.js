@@ -52,7 +52,15 @@ router.put('/updateAppointment',async function(req,res){
     } )
 })
 router.post('/addApointment', async function(req,res){
+    var split = req.body.patientName.split(' ')
+    var firstName = split[0];
+    var secondName = split[1];
+    var lastName = split[2];
+    console.log(firstName);
     var modify = new modifyFunction();
+    var ptId = await modify.getPtId(firstName,lastName,secondName);
+    console.log(ptId[0]);
+    console.log(ptId[0]["ptId"]);
     var s =  parseInt(req.body.duration);
     var a =  req.body.startTime.split(':');
     var hour = parseInt(a[0]);
@@ -71,7 +79,7 @@ router.post('/addApointment', async function(req,res){
         }
         var endtime = hour +':'+min+':00';
         console.log("asdsa"+endtime);
-    var a = await modify.addAppointment(req.body,endtime).then(result=>{
+    var a = await modify.addAppointment(req.body,endtime,ptId).then(result=>{
         res.send(result);
     })
 })
