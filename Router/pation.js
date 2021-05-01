@@ -7,8 +7,14 @@ const db = require('../dataBase/dataBaseConnection');
 router.post('/addpt', async function (req, res) {
    var result = JSON.stringify(req.body);
    var json = JSON.parse(result);
-   db.query('INSERT INTO ' + '`Patient`' + '(phone,address,	email,birthDate,maritalStatus,bloodGroup,firstName,lastName) VALUES(' + '"' + json.phone + '"' + ',' + '"' + json.address + '"' + ',' + '"' + json.email + '"' + ',' + '"' + json.birthDate + '"' + ',' +
-      '"' + json.status + '"' + ',' + '"' + json.BloodGroup + '"' + ',' + '"' + json.firstName + '"' + ',' + '"' + json.lastName + '"' + ');', function (err, result) {
+   db.query('select * from `users` where Email= ' +'"'+json.email+'"',function(resu,errr){
+   if(errr){
+      console.log(errr);
+      res.send("error");
+   }else{
+      var userId = resu[0]["id"];
+      db.query('INSERT INTO ' + '`Patient`' + '(phone,address,birthDate,maritalStatus,bloodGroup,firstName,lastName,secondName,userId) VALUES(' + '"' + json.phone + '"' + ',' + '"' + json.address + '"' + ','   + '"' + json.birthDate + '"' + ',' +
+      '"' + json.status + '"' + ',' + '"' + json.BloodGroup + '"' + ',' + '"' + json.firstName + '"' + ',' + '"' + json.lastName + '" ,'+'"'+json.secondName+'" ,' +parseInt(userId)+ ');', function (err, result) {
          if (err) {
             console.log("err=>>" + err);
             res.send(err);
@@ -62,6 +68,9 @@ router.post('/addpt', async function (req, res) {
 
          }
       })
+   }   
+   })
+  
 });
 
 router.post('/getAllergyById',function(req,res){
@@ -103,6 +112,9 @@ router.post('/getPtById',function(req,res){
        }
    });
 });
+
+
+
 router.post('/getPtByuserId',function(req,res){
    console.log('function Get Patient : ' , req.body.id);
    var sql = 'SELECT  *  FROM Patient  where Patient.id = '+req.body.id ;

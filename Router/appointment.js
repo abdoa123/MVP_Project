@@ -25,6 +25,19 @@ router.post('/getById', async function(req,res){
 })
 });
 
+router.post('/getpation', async function(req,res){
+    db.query('select * FROM  `appoinment` where id = ' + +req.body.id ,function(err,result){
+        if(err){
+            console.log(err);
+            res.send(err);
+        }
+        else{
+            console.log(result)
+            res.send(result);
+        }
+})
+});
+
 router.put('/updateAppointment',async function(req,res){
     db.query('UPDATE `appoinment` SET patientName = '+'"'+req.body.patientName+'"'+', reason = ' +'"'+ req.body.reason+'"'+', startDate = "'+req.body.startDate+'", endDate = "'+req.body.endDate+' "' + ', drFDId ='+ req.body.drFDId+', date ='+'"'+req.body.date+'"'
     +' where id = ' + req.body.id,function(err,result){
@@ -72,4 +85,5 @@ router.delete('/deleteAppoinment',async function(req,res){
         }
     })
 });
+
 module.exports = router;
