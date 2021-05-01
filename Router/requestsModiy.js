@@ -202,6 +202,29 @@ class requstss {
                 })
         })
     }
+    
+getseesion= async (req)=>{
+    var final = await [];
+    return new Promise((resolve,reject)=>{
+        //console.log(req);
+        var a = JSON.stringify(req);
+        var json = JSON.parse(a);
+        console.log('le=>', json.length);
+        for (var i = 0; i < json.length; i++) {
+            db.query('select * from `Patient` where id = ' + json[i].ptId, function (err, result1) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+                final.push(result1[0]); 
+                console.log('aaaaaa',final);  
+            });
+            console.log('asds', final);
+        }
+        console.log('aa', final);
+        resolve(final);  
+    })
+}      
 
 }
 
