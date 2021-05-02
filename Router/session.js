@@ -22,6 +22,7 @@ router.post('/getSessionByDate',async function(req,res){
     var sql = "SELECT * from `sessions` where startDate >= " + req.body.date  +'and endDate <= '+req.body.date;
     db.query(sql, function (err, result) {
         if (err) {
+            console.log("errorrrrrrrrr:   " , err)
             res.send(err); 
         }
         else{
