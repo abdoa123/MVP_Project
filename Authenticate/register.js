@@ -22,48 +22,19 @@ var user = {
 }
 var chee = false;
 router.post('/signup', async function (req, res) {
-    var errors= {};
-    if (!validator.isLength(req.body.userName, {
-        min: 2,
-        max: 30
-    })) {
-    errors.userName = 'Username should be between 2 and 30 characters'
-}
-if (validator.isEmpty(req.body.userName)) {
-    errors.userName = 'Username is required'
-}
-if (validator.isEmpty(req.body.Password)) {
-    errors.Password = 'Password is required'
-}
-if (!validator.isLength(req.body.Password, {
-        min: 6,
-        max: 30
-    })) {
-    errors.Password = 'Password should be at least 6 characters'
-}
-if (!validator.isEmail(req.body.Email)){
-errors.Email = 'the email is not vaild';
-}
-
-var j=JSON.stringify(errors);  
-console.log(j.length);
-if(j.length>2){
-    res.json(errors)
-}else{
     //create Token
-    await jwt.sign({ user: user }, 'secretkey', (err, token) => {
+     jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;
     });
     //hash Password
     var newHash = await bcrypt.hash(req.body.Password, 10);
     console.log(newHash);
     //check if Exist
-    let c = await db.query("select * from `users` where userName ='" + req.body.userName + "';", function (err, result) {
+    let c =  db.query("select * from `users` where userName ='" + req.body.userName + " or Email = " +"'"+req.body.Email + "'" , function (err, result) {
         if (err) {
             console.log("err")
         }
         if (result.length === 0) {
-            console.log("lllllllllllllllll" + result);
 
             let a = db.query("INSERT INTO `users` (userName, hash,Email, Token ) VALUES  ('" + req.body.userName + "'," + "'" + newHash + "'" + ",'" + req.body.Email + "'," + "'" + user["tocken"] + "'" + ");", function (err1, result2) {
                 if (err1) {
@@ -78,12 +49,12 @@ if(j.length>2){
         }
         else {
             console.log("ads");
-            res.send({message : "user Already Exist"});
+            res.send({message : "userName or Email Already Exist"});
         }
     });
     console.log(chee);
 
-}
+
 });
 
 module.exports = router;

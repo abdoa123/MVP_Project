@@ -22,15 +22,33 @@ const db = require('../../dataBase/dataBaseConnection');
             pId:1
  */
 router.post('/addNurse', async function(req,res){
-    let a = db.query('INSERT INTO `nurse` (firstName, lastName, Email,degree,address,phone,userName,password , Date) VALUES  (' +'"'+ req.body.firstName +'"'+ 
-        ',' +'"'+ req.body.lastName +'"' +','+'"'+ req.body.Email + '"'+
-        ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.Address + '"'+',' + req.body.phone +','+'"'+ req.body.userName +'"'+ ','+'"'+req.body.password +'"'+','+'"'+req.body.Date+'"'+')', function (err1, result2) {
-       if (err1) {
-           console.log(err1)
-       } else {
+    await jwt.sign({ user: user }, 'secretkey', (err, token) => {
+        user["tocken"] = token;
+    });
+    var newHash = await bcrypt.hash(req.body.password, 10);
+    db.query("INSERT INTO `users` (userName, hash,Email, Token ) VALUES  ('" + req.body.userName + "'," + "'" + newHash + "'" + ",'" + req.body.Email + "'," + "'" + user["tocken"] + "'" + ");", function (err1, result2) {
+        if (err1) {
+            console.log(err1)
+        } else {
+            console.log(result2.insertId)
+            db.query('INSERT INTO `nurse` (firstName, lastName,degree,address,phone, Date,userId) VALUES  (' +'"'+ req.body.firstName +'"'+ 
+            ',' +'"'+ req.body.lastName +'"' +
+            ',' +'"'+ req.body.degree+'"' +','+ '"'+req.body.Address + '"'+',' + req.body.phone +',"'+req.body.Date+'"'+','+parseInt(result2.insertId)+')', function (err1, result1) {
+           if (err1) {
+               console.log(err1)
+           } else {
+                db.query('insert into `permissiopn` (userId,roleId) VALUES  (' +result2.insertId+','+ 2+')',function (err3, result1) {
+                    if(err3){
+                        console.log(err3)
+                        res.send(err3)
+                    }else{
+                    res.send("1 record inserted");
+                    }
+                })
+           }
+        });
 
-           res.send("1 record inserted")
-       }
+            }
 
    });
 });

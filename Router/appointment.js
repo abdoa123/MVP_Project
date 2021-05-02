@@ -61,6 +61,9 @@ router.post('/addApointment', async function (req, res) {
     console.log(firstName);
     var modify = new modifyFunction();
     var ptId = await modify.getPtId(firstName, lastName, secondName);
+    if(ptId.length ===0){
+        res.send("pationtName is not Exist");
+    }else{
     var id = ptId[0]["id"]
     console.log(ptId[0]);
     console.log(ptId[0]["id"]);
@@ -85,6 +88,7 @@ router.post('/addApointment', async function (req, res) {
     var a = await modify.addAppointment(req.body, endtime, id).then(result => {
         res.send(result);
     })
+}
 })
 router.delete('/deleteAppoinment', async function (req, res) {
     db.query('DELETE  FROM `appoinment` where id = ' + req.body.id, function (err, result) {
