@@ -16,18 +16,11 @@ router.post("/",async function(req,res){
     if (err){
         res.send(err);
     }else{
-        var ress=JSON.stringify(req.body.Password);
-        var ress1=JSON.stringify(result[0]["hash"]);
-
-        console.log(ress1);
-        console.log(ress);
         bcrypt.compare(req.body.Password,result[0]["hash"], function(err1, res1) {
-            console.log(res1);
             if (err1){
                res.send(err1)
               }
               if (res1){
-                  console.log(result[0]["id"])
                  db.query('select * from `permissiopn` where userId ='+ result[0]["id"], function(err4, res4) {
                    if(err){
                        console.log(err4)
