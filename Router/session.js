@@ -25,14 +25,16 @@ router.post('/addSession', async function (req, res) {
         });
 });
 
-router.post('/getSessionByDate', async function (req, res) {
+router.get('/getSessionByDate', async function (req, res) {
     let date = new Date();
     var dt = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
 
     dt = dt.toISOString().slice(0, 19).replace('T', ' ');
     // event_date > date_sub(now(), interval 1 week
     //+' and endDate <= '+'"'+dt+'"'
-    var sql = "SELECT * from `sessions` where startDate <= " + '"' + dt + '" and endDate >= ' + '"' + dt + '"';
+    //  var sql = "SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id";
+
+    var sql = "SELECT * from `sessions` JOIN Patient on sessions.ptId = Patient.id  where startDate <= " + '"' + dt + '" and endDate >= ' + '"' + dt + '"';
    db.query(sql, function (err, result) {
         if (err) {
             res.send(err);
@@ -42,10 +44,12 @@ router.post('/getSessionByDate', async function (req, res) {
             if (result.length === 0)
                 res.send(result);
             else {
-                var modify = new modifyFunction();
-                modify.getseesion(result).then(rfinal=>{
-                    res.send(rfinal);
-                                })
+                
+                res.send(result);
+                //var modify = new modifyFunction();
+               // modify.getseesion(result).then(rfinal=>{
+                    //res.send(rfinal);
+                             //   })
             }
         }
     });
