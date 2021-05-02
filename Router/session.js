@@ -37,7 +37,8 @@ router.get('/getSessionByDate', async function (req, res) {
     var sql = "SELECT * from `sessions` JOIN Patient on sessions.ptId = Patient.id  where startDate <= " + '"' + dt + '" and endDate >= ' + '"' + dt + '"';
    db.query(sql, function (err, result) {
         if (err) {
-            res.send(err);
+            console.log("errorrrrrrrrr:   " , err)
+            res.send(err); 
         }
         else {
             
