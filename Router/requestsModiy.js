@@ -23,8 +23,14 @@ class requstss {
                         console.log("err=>>" + err);
                         resolve(false);
                     } else {
-                        console.log("res=>" + result);
-                        resolve(true);
+                        db.query('insert into `permissiopn` (userId,roleId) VALUES  (' +result2.insertId+','+2+')',function (err3, result1) {
+                            if(err3){
+                                console.log(err3)
+                                resolve(err3);
+                            }else{
+                            resolve(true)
+                            }
+                        })
                     }
                 })
             }
