@@ -2,13 +2,23 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 var db = require("../dataBase/dataBaseConnection");
+jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
 
 class requstss {
-    addPerson = (req, tableName) => {
+    addPerson = async (req, tableName) => {
         console.log(tableName);
-        return new Promise((resolve, reject) => {
-            db.query('INSERT INTO ' + '`' + tableName + '`' + '(userName,password,Email,address,establishment,phone,contactperson) VALUES(' + '"' + req.userName + '"' + ',' + '"' + req.password + '"' + ',' + '"' + req.email + '"' + ',' + '"' + req.address + '"' + ',' +
-                '"' + req.establishment + '"' + ',' + '"' + req.phone + '"' + ',' + '"' + req.contactperson + '"' + ');', function (err, result) {
+        return new Promise((resolve, reject)  => {
+             jwt.sign({ user: user }, 'secretkey', (err, token) => {
+                user["tocken"] = token;
+            });
+            var newHash =  bcrypt.hash(req.body.password, 10);
+            db.query("INSERT INTO `users` (userName, hash,Email, Token ) VALUES  ('" + req.body.userName + "'," + "'" + newHash + "'" + ",'" + req.body.Email + "'," + "'" + user["tocken"] + "'" + ");", function (err1, result2) {
+                if (err1) {
+                    console.log(err1)
+                }else{          
+            db.query('INSERT INTO ' + '`' + tableName + '`' + '(address,establishment,phone,contactperson,userId) VALUES(' + '"' + req.address + '"' + ',' +
+                '"' + req.establishment + '"' + ',' + '"' + req.phone + '"' + ',' + '"' + req.contactperson + '"' +','+parseInt(result2.insertId)+');', function (err, result) {
                     if (err) {
                         console.log("err=>>" + err);
                         resolve(false);
@@ -17,7 +27,9 @@ class requstss {
                         resolve(true);
                     }
                 })
+            }
         })
+    })
     }
     getPerson = (id, tableName) => {
         return new Promise((resolve, reject) => {
@@ -172,25 +184,19 @@ class requstss {
     }
     updateEmployee = (req, tableName) => {
         return new Promise((resolve, reject) => {
-            db.query('update `users` set userName = '+req.body.userName+' , Email = '+req.body.email,function(err,result){
-                if(err){
-                    res.send(err)
-                }else{
-                    db.query('UPDATE ' + tableName + ' SET firstName = ' + '"' + req.body.firstName + '"' + ', lastName = ' + '"' + req.body.lastName + '"' + ', degree = ' + '"' + req.body.degree + '"' + ', Date = '
-                    + '"' + req.body.date + '"' + ', address = ' + '"' + req.body.address + '"' + ', phone = '
-                    + '"' + req.body.phone + '"' + ' where id = ' + req.body.id, function (err, result) {
-                        if (err) {
-                            console.log(err);
-                            resolve(err);
-                        }
-                        else {
-                            console.log(result);
-                            resolve(true);
-                        }
-                    })
-                }
-            })
-    
+            db.query('UPDATE ' + tableName + ' SET firstName = ' + '"' + req.body.firstName + '"' + ', lastName = ' + '"' + req.body.lastName + '"' + ', password = '
+                + '"' + req.body.password + '"' + ', degree = ' + '"' + req.body.degree + '"' + ', Date = '
+                + '"' + req.body.date + '"' + ', address = ' + '"' + req.body.address + '"' + ', phone = '
+                + '"' + req.body.phone + '"' + ', Email =' + '"' + req.body.email + '"' + ', userName =' + '"' + req.body.userName + '"' + ' where id = ' + req.body.id, function (err, result) {
+                    if (err) {
+                        console.log(err);
+                        resolve(err);
+                    }
+                    else {
+                        console.log(result);
+                        resolve(true);
+                    }
+                })
         })
     }
 

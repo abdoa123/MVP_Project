@@ -58,7 +58,6 @@ var pdf = ''
       let table = `RadioOrder`;
       var modify = new modifyFunction();
       req.body['result'] = pdf
-
       modify.updateOrder(req.body,table).then(result=>{
           if(result){
               res.send("order updated done");
