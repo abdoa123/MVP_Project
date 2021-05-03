@@ -3,6 +3,11 @@ const router = express.Router();
 var db = require("../../dataBase/dataBaseConnection");
 //patho
 
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
 //get user permission by userId
 router.get('/getById',function(req,res){
     var sql = "SELECT * from `radio` where id = " + req.body.id ;

@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 var db = require("../../dataBase/dataBaseConnection");
-
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
 
 //get user permission by userId
 router.get('/getEmployee',function(req,res){

@@ -5,6 +5,8 @@ var db = require("../../dataBase/dataBaseConnection");
 jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 //get user permission by userId
+
+
 router.get('/getById',function(req,res){
     var sql = "SELECT * from `labs` where id = " + req.body.id ;
     db.query(sql, function (err, result) {

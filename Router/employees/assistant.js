@@ -8,7 +8,11 @@ const modifyFunction = require('../requestsModiy');
 app.use(bodyParser);
 const db = require('../../dataBase/dataBaseConnection');
 
-
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
 router.post('/addAssistant', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;
