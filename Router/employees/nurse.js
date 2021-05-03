@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('../requestsModiy');
-app.use(bodyParser);
-const jwt = require("jsonwebtoken") //Token module
+jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 const db = require('../../dataBase/dataBaseConnection');
 /*

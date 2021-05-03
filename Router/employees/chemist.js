@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser);
 const db = require('../../dataBase/dataBaseConnection');
 const modifyFunction = require('../requestsModiy');
-
+jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
 
 router.post('/addChemist', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {

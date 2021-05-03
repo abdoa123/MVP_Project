@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('../employees/employee');
-app.use(bodyParser);
 const db = require('../../dataBase/dataBaseConnection');
 
-
+jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
 router.post('/addPathologist', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;

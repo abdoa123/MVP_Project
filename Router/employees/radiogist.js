@@ -4,7 +4,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 app.use(bodyParser);
 const db = require('../../dataBase/dataBaseConnection');
-
+jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
 
 router.post('/addRadiogist', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
