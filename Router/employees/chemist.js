@@ -24,7 +24,7 @@ router.post('/addChemist', async function(req,res){
            if (err1) {
                console.log(err1)
            } else {
-                db.query('insert into `permissiopn` (userId,roleId) VALUES  (' +result2.insertId+','+ 7+')',function (err3, result1) {
+                db.query('insert into `permissiopn` (userId,roleId) VALUES  (' +result2.insertId+','+15+')',function (err3, result1) {
                     if(err3){
                         console.log(err3)
                         res.send(err3)
