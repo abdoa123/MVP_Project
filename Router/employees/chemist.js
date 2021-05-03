@@ -8,6 +8,12 @@ const modifyFunction = require('../requestsModiy');
 jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
+
 router.post('/addChemist', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;

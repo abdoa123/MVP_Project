@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 const modifyFunction = require('../employees/employee');
 const db = require('../../dataBase/dataBaseConnection');
 
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
+
 jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 router.post('/addPathologist', async function(req,res){

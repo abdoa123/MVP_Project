@@ -30,7 +30,7 @@ router.get('/getAll',function(req,res){
 //get list of  user permission by roleId
 router.post('/addDiseases',async function(req,res){
   
-    let a = db.query('INSERT INTO `diseases` (code, name, abbreviation ) VALUES  (' + req.body.code +  ',' + req.body.name +','+ req.body.abbreviation  + ')', function (err1, result2) {
+    let a = db.query('INSERT INTO `diseases` (code, name, abbreviation ) VALUES  (' + '"' +req.body.code +'"' + ',' + '"'+req.body.name +'"'+','+ '"'+req.body.abbreviation  +'"'+ ')', function (err1, result2) {
         if (err1) {
             console.log(err1)
         } else {

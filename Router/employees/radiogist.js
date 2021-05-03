@@ -6,6 +6,11 @@ app.use(bodyParser);
 const db = require('../../dataBase/dataBaseConnection');
 jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
 
 router.post('/addRadiogist', async function(req,res){
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
