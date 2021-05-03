@@ -3,6 +3,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('../requestsModiy');
 app.use(bodyParser);
+const jwt = require("jsonwebtoken") //Token module
+const bcrypt = require("bcrypt");
 const db = require('../../dataBase/dataBaseConnection');
 /*
  id:-1,
@@ -21,7 +23,13 @@ const db = require('../../dataBase/dataBaseConnection');
             headC: this.state.headCircumference,
             pId:1
  */
+            var user = {
+                tocken: "",
+                userName: "",
+                password: "",
+            }
 router.post('/addNurse', async function(req,res){
+    console.log("body : " , req.body);
     await jwt.sign({ user: user }, 'secretkey', (err, token) => {
         user["tocken"] = token;
     });

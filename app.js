@@ -8,6 +8,8 @@ var pathologFD = require('./Router/frontDesk/pathologisFD');
 var labFD = require('./Router/frontDesk/labFrontDisk');
 var appointment = require('./Router/appointment');
 var allergy = require('./Router/type/allergy');
+var changePasswordRouter = require('./Authenticate/ChangePassword')
+var UpdatePhoto = require('./Authenticate/updatePhoto')
 var employee = require('./Router/employees/employee');
 var payment = require('./Router/type/payment');
 var diseases = require('./Router/type/diseases');
@@ -46,6 +48,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', forgetpass);
 app.use('/authenticate', registerRouter);
@@ -54,6 +57,11 @@ app.use('/lFrontDisk',labFD);
 app.use('/pFrontDisk',pathologFD);
 app.use('/rFrontDisk',radioFD);
 app.use('/authenticate/login', loginRouter);
+
+
+app.use('/authenticate/change_password', changePasswordRouter);
+app.use('/authenticate/update_phote', UpdatePhoto);
+
 app.use('/',permission);
 app.use('/lab',labOrder);
 app.use('/radio',radioOrder);
