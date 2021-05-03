@@ -47,7 +47,7 @@ var pdf = ''
   multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../public/radios"));
+        cb(null, path.join(__dirname, "../../public/radios"));
       },
       filename: (req, file, cb) => {
           pdf = Date.now() + "-" + file.originalname

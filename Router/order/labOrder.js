@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const modifyFunction = require('../requestForOrder');
 var db = require("../../dataBase/dataBaseConnection");
 const multer = require('multer')
+const path = require('path')
 
 router.post('/addOrder', async function(req,res){
      let  table = `labOrder`;
@@ -45,6 +46,7 @@ router.post('/getOrdersByLabId',async function(req,res){
 
 
 router.post('/getOrderByPtId',async function(req,res){
+
     console.log("ptID: ", req.body.ptId , "   ", req.body.type);
 
     var modify = new modifyFunction();
@@ -59,19 +61,19 @@ router.post('/getOrderByPtId',async function(req,res){
   });
   
 var pdf = ''
-  router.put('/updateOrder',
+  router.post('/updateOrder',
     multer({
-    storage: multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../public/labs"));
-      },
-      filename: (req, file, cb) => {
-          pdf = Date.now() + "-" + file.originalname
-        cb(null, pdf);
-      },
-    }),
-  }).single("result")
-  ,async function(req,res){
+        storage: multer.diskStorage({
+            destination: (req, file, cb) => {
+              cb(null, path.join(__dirname, "../../public/labs"));
+            },
+            filename: (req, file, cb) => {
+                pdf = Date.now() + "-" + file.originalname
+              cb(null, pdf);
+            },
+          }),
+        }).single("images")
+        ,function(req,res){
       console.log("update Order: " , req.body);
       let table = `labOrder`;
       var modify = new modifyFunction();

@@ -51,7 +51,7 @@ router.post('/getOrderById',async function(req,res){
   multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../public/pathelogys"));
+        cb(null, path.join(__dirname, "../../public/pathelogys"));
       },
       filename: (req, file, cb) => {
           pdf = Date.now() + "-" + file.originalname
