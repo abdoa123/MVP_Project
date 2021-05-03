@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const modifyFunction = require('../requestForOrder');
 var db = require("../../dataBase/dataBaseConnection");
+const multer = require('multer')
 
 router.post('/addOrder', async function(req,res){
      let  table = `labOrder`;
@@ -57,11 +58,24 @@ router.post('/getOrderByPtId',async function(req,res){
     })
   });
   
-
-  router.put('/updateOrder',async function(req,res){
+var pdf = ''
+  router.put('/updateOrder',
+    multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, "../public/labs"));
+      },
+      filename: (req, file, cb) => {
+          pdf = Date.now() + "-" + file.originalname
+        cb(null, pdf);
+      },
+    }),
+  }).single("result")
+  ,async function(req,res){
       console.log("update Order: " , req.body);
       let table = `labOrder`;
       var modify = new modifyFunction();
+      req.body['result'] = pdf
       modify.updateOrder(req.body,table).then(result=>{
           if(result){
               res.send("order updated done");

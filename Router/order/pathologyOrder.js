@@ -44,9 +44,25 @@ router.post('/getOrderById',async function(req,res){
     });
   });
 
-  router.put('/updateOrder',async function(req,res){
+  var pdf = ''
+
+  router.put('/updateOrder',
+  multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, "../public/pathelogys"));
+      },
+      filename: (req, file, cb) => {
+          pdf = Date.now() + "-" + file.originalname
+        cb(null, pdf);
+      },
+    }),
+  }).single("result")
+  ,
+  async function(req,res){
       let table = `pathologyOrder`;
       var modify = new modifyFunction();
+      req.body['result'] = pdf
       modify.updateOrder(req.body,table).then(result=>{
           if(result){
               res.send("order updated done");
