@@ -20,10 +20,13 @@ router.get('/getById',function(req,res){
 });
 
 router.get('/getAll',function(req,res){
+    console.log("kkkkkkkkkkkkkkkkkk")
 db.query('select * from `labs` ',function(err,result){
 if(err){
+    console.log(err)
     res.send(err);
 }else{
+    console.log(result)
     res.send(result);
 }
 });

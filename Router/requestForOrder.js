@@ -29,7 +29,41 @@ class requstss{
             }
                  })
                      })
-    }                   
+    }  
+    getOrdersByLab = (labId)=>{
+        return new Promise((resolve,reject)=>{
+            // db.query("SELECT Lo.id,Lo.comments,P.id as PtID,P.firstname,P.secondName,P.lastname,P.address,P.phone FROM labFrontDisk LFD Join labs  L on LFD.labId = L.id Join labOrder Lo on Lo.labId = L.id Join Patient P on Lo.ptId = P.id where LFD.labId ="+req.params.labID+" AND LFD.id="+req.params.labFdId,function(err,result){
+            //     if(err){
+            //         reject(err)
+            //     }else{
+            //         resolve(result)
+            //     }
+            // })
+            db.query("SELECT Lo.id,Lo.result,P.id as PtID,P.firstname,P.secondName,P.lastname,P.address,P.phone from labOrder Lo Join Patient P on Lo.ptId = P.id  where labId = "+labId,function(err,result){
+                if(err){
+                    reject(err)
+                }else{
+                    resolve(result)
+                }
+            })
+             
+        })
+    }    
+                 
+    getLabByLabFrontDisk = (userId)=>{
+        return new Promise((resolve,reject)=>{
+
+            db.query("SELECT labId from `labFrontDisk` where userId = "+userId,function(err,result){
+                if(err){
+                    reject(err)
+                }else{
+                    resolve(result[0])
+                }
+            })
+             
+        })
+    }    
+                 
     getOrder = async (req,type)=>{
     
         return new Promise((resolve,reject)=>{
@@ -113,6 +147,21 @@ class requstss{
                 }
                 else{
                     resolve(true);
+                }
+            } )
+        })}
+
+    updateOrderResult = (req,tableName)=>{
+        console.log("result : " , req.result)
+        return new Promise((resolve,reject)=>{
+            db.query('UPDATE '+tableName+' SET result = "'+ req.result+'" where id = ' + req.id,function(err,result){
+                if(err){
+                    console.log("oooooooooooooooo",err);
+                    reject(err);
+                }
+                else{
+                    console.log("yyyyyyyy");
+                    resolve(result);
                 }
             } )
         })

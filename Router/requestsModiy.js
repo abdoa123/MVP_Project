@@ -23,8 +23,8 @@ class requstss {
                     console.log(err1)
                 }else{
                     console.log(parseInt(result2.insertId))          
-            db.query('INSERT INTO ' + '`' + tableName + '`' + '(address,establishment,phone,contactperson,userId) VALUES(' + '"' + req.address + '"' + ',' +
-                '"' + req.establishment + '"' + ',' + '"' + req.phone + '"' + ',' + '"' + req.contactperson + '"' +','+parseInt(result2.insertId)+');', function (err, result) {
+            db.query('INSERT INTO ' + '`' + tableName + '`' + '(address,establishment,phone,contactperson,userId,labId) VALUES(' + '"' + req.address + '"' + ',' +
+                '"' + req.establishment + '"' + ',' + '"' + req.phone + '"' + ',' + '"' + req.contactperson + '"' +','+parseInt(result2.insertId)+',' + req.labId +');', function (err, result) {
                     if (err) {
                         console.log("err=>>" + err);
                         resolve(false);

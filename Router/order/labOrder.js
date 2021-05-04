@@ -21,6 +21,18 @@ router.post('/addOrder', async function(req,res){
      })
 });
 
+router.post('/getOrdersByLabId', function(req,res){
+    var sql = "SELECT * from `labOrder` where labId = "+req.body.labId ;
+    db.query(sql, function (err, result) {
+        if (err) {
+            res.send(err); 
+        }
+        else{
+           res.send(result);
+        }
+    });
+  });
+  
 router.post('/getOrdersByLabId',async function(req,res){
     var sql = "SELECT * from `labOrder` where labId = "+req.body.labId ;
     db.query(sql, function (err, result) {
@@ -32,16 +44,26 @@ router.post('/getOrdersByLabId',async function(req,res){
         }
     });
   });
+
   router.post('/getOrdersByLabFdId',async function(req,res){
-    var sql = "SELECT * from `labOrder` where LfDId = "+req.body.LfDId ;
-    db.query(sql, function (err, result) {
-        if (err) {
-            res.send(err); 
-        }
-        else{
-           res.send(result);
-        }
-    });
+    var modify = new modifyFunction();
+    modify.getOrdersByLab(req.body.labId).then(result=>{
+        res.send(result)
+    }).catch(err=>{
+        res.status(400)
+        res.send({err:err})
+    })
+  });
+
+  
+  router.post('/getLabByUser',async function(req,res){
+    var modify = new modifyFunction();
+    modify.getLabByLabFrontDisk(req.body.userId).then(result=>{
+        res.send(result)
+    }).catch(err=>{
+        res.status(400)
+        res.send({err:err})
+    })
   });
 
 
@@ -72,7 +94,7 @@ var pdf = ''
               cb(null, pdf);
             },
           }),
-        }).single("images")
+        }).single("file")
         ,function(req,res){
       console.log("update Order: " , req.body);
       let table = `labOrder`;
@@ -85,6 +107,39 @@ var pdf = ''
               console.log("error",result);
               res.send(result);
           }
+      })
+
+  })
+// var pdf = ''
+  router.post('/uploadFile',
+    multer({
+        storage: multer.diskStorage({
+            destination: (req, file, cb) => {
+              console.log("yyyyyyyyyyiiiiiiiiii")
+              cb(null, path.join(__dirname, "../../public/labs"));
+            },
+            filename: (req, file, cb) => {
+                pdf = Date.now() + "-" + file.originalname
+                console.log("pdfff: "  ,  pdf)
+              cb(null, pdf);
+            },
+          }),
+        }).single("result")
+        ,function(req,res){
+      console.log("update Order: " , req.body);
+      console.log("PDF" , pdf);
+      let table = `labOrder`;
+      var modify = new modifyFunction();
+      req.body['result'] = pdf
+      modify.updateOrderResult(req.body,table).then(result=>{
+          if(result){
+              res.send("order updated done");
+          }else{
+              console.log("error",result);
+              res.send(result);
+          }
+      }).catch((e) =>{
+        console.log(e)
       })
 
   })
