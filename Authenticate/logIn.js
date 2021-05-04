@@ -18,6 +18,7 @@ router.post("/",async function(req,res){
         res.send(err);
     }else{
         bcrypt.compare(req.body.Password,result[0]["hash"], function(err1, res1) {
+            console.log(result[0]["hash"]);
             if (err1){
                 console.log(err1)
                res.send(err1)
@@ -27,11 +28,16 @@ router.post("/",async function(req,res){
                    if(err4){
                        console.log(err4)
                    }else{
+                       if(res4.length===0){
+                           console.log('done')
+                           user["role"] ='done';
+                           res.send(user);
+                       }else{
                     user["role"] = res4[0]["roleId"];
                      user["userId"]= result[0]["id"];
                      console.log(user);
                     res.send(user);
-                   }
+                   }}
                  })
                 // Send JWT
               }else{

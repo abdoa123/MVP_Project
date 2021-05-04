@@ -127,11 +127,11 @@ class requstss {
                         db.query('INSERT INTO `appoinment` (patientName, reason,startDate,endDate,date,ptId,'+req.check+') VALUES  (' + '"' + noS + '"' + ',' + '"' + req.reason + '"' +
                             ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + '"' + req.date + '" ,' +id+ ','+req.id+')', function (err1, result2) {
                                 if (err1) {
-                                    console.log(err1)
+                                    console.log("loooolerrroror:    ",err1)
                                     resolve(err1);
 
                                 } else {
-                                    console.log(result2)
+                                    console.log("reeeesss ",result2)
 
                                     resolve(result2);
                                 }

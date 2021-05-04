@@ -69,10 +69,10 @@ router.post('/getOrdersByLabId',async function(req,res){
 
 router.post('/getOrderByPtId',async function(req,res){
 
-    console.log("ptID: ", req.body.ptId , "   ", req.body.type);
+    console.log("ptID: ", req.body.ptId , "   ", req.body.type , req.body.labId );
 
     var modify = new modifyFunction();
-    modify.getOrder(req.body.ptId,req.body.type).then(result=>{
+    modify.getOrder(req.body.ptId,req.body.type,req.body.labId).then(result=>{
         if(result){
             res.send(result);
         }else{
@@ -111,7 +111,9 @@ var pdf = ''
 
   })
 // var pdf = ''
-  router.post('/uploadFile',
+  // router.post('/uploadFile',function(req,res){
+  //   db.query('select * from ')
+  // },
     multer({
         storage: multer.diskStorage({
             destination: (req, file, cb) => {

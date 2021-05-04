@@ -54,6 +54,7 @@ router.put('/updateAppointment', async function (req, res) {
         })
 })
 router.post('/addApointment', async function (req, res) {
+    
     var split = req.body.patientName.split(' ')
     var firstName = split[0];
     var secondName = split[1];

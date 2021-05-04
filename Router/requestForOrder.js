@@ -6,8 +6,8 @@ class requstss{
     addOrder = (req,tableName)=>{
         console.log(tableName); 
         return new Promise((resolve,reject)=>{
-            db.query('INSERT INTO ' + '`'+ tableName +'`'+  '(ptId,drId,date,comments,status,result	) VALUES('+'"'+req.ptId+'"'+','+'"'+req.drId+'"'+','+'"'+req.date+'"'+','+'"'+req.comments+'"'+','+
-            '"'+req.status+'"'+','+'"'+ req.result +'"' +');', function (err, result) {
+            db.query('INSERT INTO ' + '`'+ tableName +'`'+  '(ptId,drId,date,comments,status,result,labId	) VALUES('+'"'+req.ptId+'"'+','+'"'+req.drId+'"'+','+'"'+req.date+'"'+','+'"'+req.comments+'"'+','+
+            '"'+req.status+'"'+','+'"'+ req.result +'"'+','+'"'+ req.labId +'"'+');', function (err, result) {
             if (err) {
             console.log(err)
             resolve(false);
@@ -64,7 +64,7 @@ class requstss{
         })
     }    
                  
-    getOrder = async (req,type)=>{
+    getOrder = async (req,type ,labId)=>{
     
         return new Promise((resolve,reject)=>{
 
@@ -91,9 +91,11 @@ class requstss{
         }
         else if(type==0){
             console.log("0000")
-            var sql = 'SELECT  *  FROM labOrder where ptId = '+req;
+            // var sql = 'SELECT  *  FROM labOrder where ptId = '+req;
+            var sql = 'SELECT  *  FROM labOrder where ptId =  ' + '"' + req + '"' + 'and labId =' + labId;
             db.query(sql, function (err, result) {
             if (err) {
+                console.log("errorr: ",err)
             resolve(err);
             }else{      
                 resolve(result);
