@@ -4,21 +4,27 @@ const bodyParser = require('body-parser');
 var db = require("../dataBase/dataBaseConnection");
 jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
-
+var user = {
+    tocken: "",
+    userName: "",
+    password: "",
+}
 class requstss {
     addPerson = async (req, tableName) => {
         console.log(tableName);
-        return new Promise((resolve, reject)  => {
-             jwt.sign({ user: user }, 'secretkey', (err, token) => {
+        return  new Promise (async (resolve, reject)  => {
+            console.log("gj")
+            await jwt.sign({ user: user }, 'secretkey', (err, token) => {
                 user["tocken"] = token;
             });
-            var newHash =  bcrypt.hash(req.body.password, 10);
-            db.query("INSERT INTO `users` (userName, hash,Email, Token ) VALUES  ('" + req.body.userName + "'," + "'" + newHash + "'" + ",'" + req.body.Email + "'," + "'" + user["tocken"] + "'" + ");", function (err1, result2) {
+            var newHash = await  bcrypt.hash(req.password, 10);
+            db.query("INSERT INTO `users` (userName, hash,Email, Token ) VALUES  ('" + req.userName + "'," + "'" + newHash + "'" + ",'" + req.Email + "'," + "'" + user["tocken"] + "'" + ");", function (err1, result2) {
                 if (err1) {
                     console.log(err1)
-                }else{          
-            db.query('INSERT INTO ' + '`' + tableName + '`' + '(address,establishment,phone,contactperson,userId) VALUES(' + '"' + req.address + '"' + ',' +
-                '"' + req.establishment + '"' + ',' + '"' + req.phone + '"' + ',' + '"' + req.contactperson + '"' +','+parseInt(result2.insertId)+');', function (err, result) {
+                }else{
+                    console.log(parseInt(result2.insertId))          
+            db.query('INSERT INTO ' + '`' + tableName + '`' + '(address,establishment,phone,contactperson,userId,labId) VALUES(' + '"' + req.address + '"' + ',' +
+                '"' + req.establishment + '"' + ',' + '"' + req.phone + '"' + ',' + '"' + req.contactperson + '"' +','+parseInt(result2.insertId)+',' + req.labId +');', function (err, result) {
                     if (err) {
                         console.log("err=>>" + err);
                         resolve(false);
@@ -121,11 +127,11 @@ class requstss {
                         db.query('INSERT INTO `appoinment` (patientName, reason,startDate,endDate,date,ptId,'+req.check+') VALUES  (' + '"' + noS + '"' + ',' + '"' + req.reason + '"' +
                             ',' + "'" + t + "'" + ',' + "'" + endtime2 + "'" + ',' + '"' + req.date + '" ,' +id+ ','+req.id+')', function (err1, result2) {
                                 if (err1) {
-                                    console.log(err1)
+                                    console.log("loooolerrroror:    ",err1)
                                     resolve(err1);
 
                                 } else {
-                                    console.log(result2)
+                                    console.log("reeeesss ",result2)
 
                                     resolve(result2);
                                 }

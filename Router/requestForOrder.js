@@ -6,8 +6,8 @@ class requstss{
     addOrder = (req,tableName)=>{
         console.log(tableName); 
         return new Promise((resolve,reject)=>{
-            db.query('INSERT INTO ' + '`'+ tableName +'`'+  '(ptId,drId,date,comments,status,result	) VALUES('+'"'+req.ptId+'"'+','+'"'+req.drId+'"'+','+'"'+req.date+'"'+','+'"'+req.comments+'"'+','+
-            '"'+req.status+'"'+','+'"'+ req.result +'"' +');', function (err, result) {
+            db.query('INSERT INTO ' + '`'+ tableName +'`'+  '(ptId,drId,date,comments,status,result,labId	) VALUES('+'"'+req.ptId+'"'+','+'"'+req.drId+'"'+','+'"'+req.date+'"'+','+'"'+req.comments+'"'+','+
+            '"'+req.status+'"'+','+'"'+ req.result +'"'+','+'"'+ req.labId +'"'+');', function (err, result) {
             if (err) {
             console.log(err)
             resolve(false);
@@ -29,8 +29,42 @@ class requstss{
             }
                  })
                      })
-    }                   
-    getOrder = async (req,type)=>{
+    }  
+    getOrdersByLab = (labId)=>{
+        return new Promise((resolve,reject)=>{
+            // db.query("SELECT Lo.id,Lo.comments,P.id as PtID,P.firstname,P.secondName,P.lastname,P.address,P.phone FROM labFrontDisk LFD Join labs  L on LFD.labId = L.id Join labOrder Lo on Lo.labId = L.id Join Patient P on Lo.ptId = P.id where LFD.labId ="+req.params.labID+" AND LFD.id="+req.params.labFdId,function(err,result){
+            //     if(err){
+            //         reject(err)
+            //     }else{
+            //         resolve(result)
+            //     }
+            // })
+            db.query("SELECT Lo.id,Lo.result,P.id as PtID,P.firstname,P.secondName,P.lastname,P.address,P.phone from labOrder Lo Join Patient P on Lo.ptId = P.id  where labId = "+labId,function(err,result){
+                if(err){
+                    reject(err)
+                }else{
+                    resolve(result)
+                }
+            })
+             
+        })
+    }    
+                 
+    getLabByLabFrontDisk = (userId)=>{
+        return new Promise((resolve,reject)=>{
+
+            db.query("SELECT labId from `labFrontDisk` where userId = "+userId,function(err,result){
+                if(err){
+                    reject(err)
+                }else{
+                    resolve(result[0])
+                }
+            })
+             
+        })
+    }    
+                 
+    getOrder = async (req,type ,labId)=>{
     
         return new Promise((resolve,reject)=>{
 
@@ -57,9 +91,11 @@ class requstss{
         }
         else if(type==0){
             console.log("0000")
-            var sql = 'SELECT  *  FROM labOrder where ptId = '+req;
+            // var sql = 'SELECT  *  FROM labOrder where ptId = '+req;
+            var sql = 'SELECT  *  FROM labOrder where ptId =  ' + '"' + req + '"' + 'and labId =' + labId;
             db.query(sql, function (err, result) {
             if (err) {
+                console.log("errorr: ",err)
             resolve(err);
             }else{      
                 resolve(result);
@@ -113,6 +149,21 @@ class requstss{
                 }
                 else{
                     resolve(true);
+                }
+            } )
+        })}
+
+    updateOrderResult = (req,tableName)=>{
+        console.log("result : " , req.result)
+        return new Promise((resolve,reject)=>{
+            db.query('UPDATE '+tableName+' SET result = "'+ req.result+'" where id = ' + req.id,function(err,result){
+                if(err){
+                    console.log("oooooooooooooooo",err);
+                    reject(err);
+                }
+                else{
+                    console.log("yyyyyyyy");
+                    resolve(result);
                 }
             } )
         })
