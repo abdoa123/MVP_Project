@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken") //Token module
 const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 var cors = require('cors')
-const validator = require('validator')
 
 var db = require("../dataBase/dataBaseConnection");
 const { token } = require('morgan');
