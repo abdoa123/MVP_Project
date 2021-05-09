@@ -67,7 +67,7 @@ router.post('/getOrdersByLabId',async function(req,res){
   });
 
 
-router.post('/getOrderByPtId',async function(req,res){
+router.post('/getOrder',async function(req,res){
 
     console.log("ptID: ", req.body.ptId , "   ", req.body.type , req.body.labId );
 
@@ -144,7 +144,7 @@ var pdf = ''
         console.log(e)
       })
 
-  })
+  }
 
 router.put('/setAccept',function(req,res){  
         console.log("res:   " , req.body.labFdId);    

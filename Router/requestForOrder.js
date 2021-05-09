@@ -70,7 +70,7 @@ class requstss{
 
             if(type==4){
                 console.log("444")
-                var sql = 'SELECT  *  FROM  labOrder ON Patient.id = labOrder.ptId AND Patient.id = '+req;
+                var sql = 'SELECT  *  FROM  labOrder ON Patient.id = labOrder.ptId AND labOrder.LfDId IS NOT NULL';
                 db.query(sql, function (err, result) {
                 if (err) {
                 resolve(err);
