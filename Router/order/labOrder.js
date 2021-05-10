@@ -21,8 +21,8 @@ router.post('/addOrder', async function(req,res){
      })
 });
 
-router.post('/getOrdersByLabId', function(req,res){
-    var sql = "SELECT * from `labOrder` where labId = "+req.body.labId ;
+router.post('/getOrdersByPtId', function(req,res){
+    var sql = "SELECT * from `labOrder` where ptId = "+req.body.ptId ;
     db.query(sql, function (err, result) {
         if (err) {
             res.send(err); 
