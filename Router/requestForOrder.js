@@ -73,8 +73,10 @@ class requstss{
                 var sql = 'SELECT  *  FROM  labOrder JOIN Patient ON Patient.id = labOrder.ptId AND LfDId IS NULL';
                 db.query(sql, function (err, result) {
                 if (err) {
-                resolve(err);
-                }else{      
+                    console.log(err)  
+                    resolve(err);
+                }else{    
+                    console.log(result)  
                     resolve(result);
                 }
                      })}
